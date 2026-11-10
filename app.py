@@ -18,7 +18,7 @@ def init_supabase():
 
 supabase = init_supabase()
 
-# 從 Supabase 讀取店家資料
+# 從 Supabase 載入店家資料
 def load_stores():
     try:
         response = supabase.table("stores").select("*").execute()
@@ -29,13 +29,13 @@ def load_stores():
 
 stores_data = load_stores()
 
-# --- CSS 注入：自訂背景色 #f7dad2、字體顏色與手機版地圖高度調整 ---
+# --- CSS 注入：自訂背景色、字體顏色、手機版地圖縮小與全域樣式 ---
 st.markdown(
     f"""
     <style>
-    /* 全局背景色改成 #f7dad2 */
+    /* 全局背景色 */
     .stApp {{
-        background-color: #f7dad2;
+        background-color: #e3bdaf;
     }}
     /* 側邊欄背景色 */
     [data-testid="stSidebar"] {{
@@ -72,7 +72,9 @@ st.markdown(
 )
 
 TAGS_FILE = "tags.json"
-def load_tags(file_path, default_value):
+
+# --- 輔助函數：讀取本地 tags.json ---
+def load_json(file_path, default_value):
     if not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
         return default_value
     try:
@@ -87,7 +89,7 @@ default_tags = {
     "type": ["聚餐", "約會", "放鬆"],
     "tier": ["IG REELS拍攝店家", "LINE社群 上榜名單", "WEN日常美食推薦"]
 }
-tags_data = load_tags(TAGS_FILE, default_tags)
+tags_data = load_json(TAGS_FILE, default_tags)
 
 # --- 側邊欄：進階篩選器 ---
 st.sidebar.header("🔍 雲林美食探索")
@@ -128,11 +130,11 @@ if selected_tiers:
     filtered_stores = [s for s in filtered_stores if s.get("tier") in selected_tiers]
 
 # --- 主畫面佈局 ---
-st.title("Wen's life 雲林推薦美食地圖")
+st.title("🍲 雲林美食與空間地圖")
 st.markdown(f"目前為您篩選出 **{len(filtered_stores)}** 間精選店家：")
 
 if not filtered_stores:
-    st.info("💡 目前資料庫尚無資料，請透過後台新增店家。")
+    st.info("💡 目前雲端資料庫尚無符合篩選條件的店家，請透過後台新增。")
 else:
     map_col, list_col = st.columns([1.2, 1])
 
@@ -224,7 +226,7 @@ else:
                 popup=folium.Popup(popup_html, max_width=250)
             ).add_to(m)
 
-        st_folium(m, width=None, height=300, use_container_width=True)
+        st_folium(m, width=None, height=550, use_container_width=True)
 
     with list_col:
         st.subheader("📋 店家清單")
@@ -241,16 +243,6 @@ else:
                 card_bg = "rgba(204, 165, 155, 0.35)"
                 card_border = "#cca59b"
 
-            name = store.get('name', '')
-            subtitle = store.get('subtitle', '')
-            
-            header_html = f"""
-            <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px;">
-                <h3 style="margin: 0; font-size: 18px; color: #803c34;">{name}</h3>
-                <span style="font-size: 14px; color: #a6635b; font-weight: 500;">│ {subtitle}</span>
-            </div>
-            """
-
             card_html = f"""
             <div style="
                 background-color: {card_bg};
@@ -260,12 +252,11 @@ else:
                 margin-bottom: 14px;
                 box-shadow: 0 2px 6px rgba(0,0,0,0.06);
             ">
-                {header_html}
+                <h3 style="margin: 0 0 4px 0; font-size: 18px; color: #803c34;">{store.get('name')}</h3>
+                <p style="margin: 0 0 6px 0; font-size: 12px; font-weight: bold; color: #803c34;"><code>{tier}</code></p>
+                <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: bold; color: #803c34;">{store.get('subtitle', '')}</p>
             """
             
-            if store.get("description"):
-                card_html += f"<p style='margin: 0 0 8px 0; font-size: 13px; color: #4a403f !important; line-height: 1.4;'>{store.get('description')}</p>"
-
             cat_val = store.get("category", "")
             cat_display = ", ".join(cat_val) if isinstance(cat_val, list) else str(cat_val)
             
@@ -280,6 +271,9 @@ else:
             
             if store.get("price_range"):
                 card_html += f"<p style='margin: 0 0 6px 0; font-size: 12px; color: #803c34;'>💰 消費均消：{store.get('price_range')}</p>"
+                
+            if store.get("description"):
+                card_html += f"<p style='margin: 0 0 10px 0; font-size: 13px; color: #803c34; line-height: 1.4;'>{store.get('description')}</p>"
             
             btn_html = "<div style='display: flex; gap: 8px; margin-top: 10px;'>"
             if store.get("ig_url"):
