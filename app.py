@@ -78,13 +78,22 @@ st.markdown(
 DATA_FILE = "stores.json"
 TAGS_FILE = "tags.json"
 
-# --- 輔助函數：讀取資料 ---
+# --- 輔助函數：讀取資料並自動依店名去重 ---
 def load_json(file_path, default_value):
     if not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
         return default_value
     try:
         with open(file_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
+            # 如果是店家資料，自動依據店名 (name) 過濾重複項，保留最後一筆
+            if file_path == DATA_FILE and isinstance(data, list):
+                unique_stores = {}
+                for store in data:
+                    name = store.get("name")
+                    if name:
+                        unique_stores[name] = store
+                return list(unique_stores.values())
+            return data
     except:
         return default_value
 
@@ -249,7 +258,6 @@ else:
 
             store_name = store.get('name', '')
             store_sub = store.get('subtitle', '')
-            # 副標字體放大至 14.5px 讓視覺更清晰
             title_display = f"{store_name} <span style='font-size: 14.5px; font-weight: normal; color: #803c34;'>| {store_sub}</span>" if store_sub else store_name
 
             card_html = f"""
@@ -291,6 +299,4 @@ else:
             
             card_html += btn_html + "</div>"
             
-            st.markdown(card_html, unsafe_allow_html=True)
-            st.markdown(card_html, unsafe_allow_html=True)
             st.markdown(card_html, unsafe_allow_html=True)
