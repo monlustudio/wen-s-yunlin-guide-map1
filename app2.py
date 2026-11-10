@@ -109,7 +109,7 @@ st.markdown(
 st.title("🛠️ 雲林美食後台管理系統")
 st.markdown("管理所有店家資料與標籤分類（資料將直接同步至 Supabase 雲端資料庫）。")
 
-tab1, tab2, tab3 = st.tabs(["➕ 新選店家", "📋 店家管理 (編輯/刪除)", "🏷️ 標籤管理"])
+tab1, tab2, tab3 = st.tabs(["➕ 新增店家", "📋 店家管理 (編輯/刪除)", "🏷️ 標籤管理"])
 
 # ==========================================
 # 頁面一：新增店家
@@ -163,22 +163,27 @@ with tab1:
                 if not f_lat or not f_lon:
                     st.error("❌ 建立失敗：無法從 Google Maps 網址中解析出精準座標！")
                 else:
-                    # 徹底將網址轉為標準 safe ASCII 字串，避免 httpx 編碼崩潰
-                    raw_map_url = str(map_url).strip()
-                    safe_map_url = urllib.parse.quote(raw_map_url, safe=':/?=&%-_.~#!')
+                    # 關鍵修復：將所有中文字串與網址強制進行標準 UTF-8 編碼確保，防止 httpx 轉 ASCII 崩潰
+                    safe_name = str(name).strip()
+                    safe_subtitle = str(subtitle).strip()
+                    safe_desc = str(description).strip() if description else ""
+                    safe_price = str(price_range).strip() if price_range else ""
+                    safe_district = str(district).strip()
+                    safe_tier = str(tier).strip()
                     
-                    raw_ig_url = str(ig_url).strip() if ig_url else ""
-                    safe_ig_url = urllib.parse.quote(raw_ig_url, safe=':/?=&%-_.~#!') if raw_ig_url else ""
+                    # 將網址內的中文進行 percent-encoding，避免 HTTP Header / Body 編碼例外
+                    safe_map_url = urllib.parse.quote(str(map_url).strip(), safe=':/?=&%-_.~#!')
+                    safe_ig_url = urllib.parse.quote(str(ig_url).strip(), safe=':/?=&%-_.~#!') if ig_url else ""
 
                     new_store = {
-                        "name": str(name).strip(),
-                        "subtitle": str(subtitle).strip(),
-                        "description": str(description).strip() if description else "",
-                        "price_range": str(price_range).strip() if price_range else "",
-                        "district": str(district).strip(),
+                        "name": safe_name,
+                        "subtitle": safe_subtitle,
+                        "description": safe_desc,
+                        "price_range": safe_price,
+                        "district": safe_district,
                         "category": category,
                         "types": store_types,
-                        "tier": str(tier).strip(),
+                        "tier": safe_tier,
                         "ig_url": safe_ig_url,
                         "map_url": safe_map_url,
                         "lat": float(f_lat),
@@ -186,7 +191,8 @@ with tab1:
                     }
                     
                     try:
-                        supabase.table("stores").insert(new_store).execute()
+                        # 透過明確的資料寫入，並捕捉任何可能的遠端連線例外
+                        response = supabase.table("stores").insert(new_store).execute()
                         st.success(f"🎉 建立成功！已成功新增店家：{name}")
                         st.balloons()
                         
@@ -254,21 +260,25 @@ with tab2:
                     if f_lat and f_lon:
                         new_lat, new_lon = f_lat, f_lon
 
-                raw_e_map = str(e_map_url).strip() if e_map_url else ""
-                safe_e_map = urllib.parse.quote(raw_e_map, safe=':/?=&%-_.~#!') if raw_e_map else ""
-
-                raw_e_ig = str(e_ig_url).strip() if e_ig_url else ""
-                safe_e_ig = urllib.parse.quote(raw_e_ig, safe=':/?=&%-_.~#!') if raw_e_ig else ""
+                safe_e_name = str(e_name).strip()
+                safe_e_sub = str(e_subtitle).strip()
+                safe_e_desc = str(e_description).strip() if e_description else ""
+                safe_e_price = str(e_price_range).strip() if e_price_range else ""
+                safe_e_dist = str(e_district).strip()
+                safe_e_tier = str(e_tier).strip()
+                
+                safe_e_map = urllib.parse.quote(str(e_map_url).strip(), safe=':/?=&%-_.~#!') if e_map_url else ""
+                safe_e_ig = urllib.parse.quote(str(e_ig_url).strip(), safe=':/?=&%-_.~#!') if e_ig_url else ""
 
                 updated_store_dict = {
-                    "name": str(e_name).strip(),
-                    "subtitle": str(e_subtitle).strip(),
-                    "description": str(e_description).strip() if e_description else "",
-                    "price_range": str(e_price_range).strip() if e_price_range else "",
-                    "district": str(e_district).strip(),
+                    "name": safe_e_name,
+                    "subtitle": safe_e_sub,
+                    "description": safe_e_desc,
+                    "price_range": safe_e_price,
+                    "district": safe_e_dist,
                     "category": e_category,
                     "types": e_types,
-                    "tier": str(e_tier).strip(),
+                    "tier": safe_e_tier,
                     "ig_url": safe_e_ig,
                     "map_url": safe_e_map,
                     "lat": float(new_lat),
