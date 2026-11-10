@@ -212,6 +212,17 @@ else:
                 card_bg = "rgba(204, 165, 155, 0.35)"
                 card_border = "#cca59b"
 
+            name = store.get('name', '')
+            subtitle = store.get('subtitle', '')
+            
+            # 店名與副標（帶有垂直線分隔，副標顏色稍淺）
+            header_html = f"""
+            <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px;">
+                <h3 style="margin: 0; font-size: 18px; color: #803c34;">{name}</h3>
+                <span style="font-size: 14px; color: #a6635b; font-weight: 500;">│ {subtitle}</span>
+            </div>
+            """
+
             card_html = f"""
             <div style="
                 background-color: {card_bg};
@@ -221,9 +232,7 @@ else:
                 margin-bottom: 14px;
                 box-shadow: 0 2px 6px rgba(0,0,0,0.06);
             ">
-                <h3 style="margin: 0 0 4px 0; font-size: 18px; color: #803c34;">{store.get('name')}</h3>
-                <p style="margin: 0 0 6px 0; font-size: 12px; font-weight: bold; color: #803c34;"><code>{tier}</code></p>
-                <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: bold; color: #803c34;">{store.get('subtitle', '')}</p>
+                {header_html}
             """
             
             cat_val = store.get("category", "")
@@ -241,8 +250,9 @@ else:
             if store.get("price_range"):
                 card_html += f"<p style='margin: 0 0 6px 0; font-size: 12px; color: #803c34;'>💰 消費均消：{store.get('price_range')}</p>"
                 
+            # 店家詳細介紹文字改為深灰色 (#4a403f)
             if store.get("description"):
-                card_html += f"<p style='margin: 0 0 10px 0; font-size: 13px; color: #803c34; line-height: 1.4;'>{store.get('description')}</p>"
+                card_html += f"<p style='margin: 0 0 10px 0; font-size: 13px; color: #4a403f !important; line-height: 1.4;'>{store.get('description')}</p>"
             
             # 內嵌按鈕
             btn_html = "<div style='display: flex; gap: 8px; margin-top: 10px;'>"
