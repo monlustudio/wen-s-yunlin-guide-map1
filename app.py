@@ -4,11 +4,32 @@ import json
 import os
 import folium
 from streamlit_folium import st_folium
+from supabase import create_client, Client
 
 # 設定頁面佈局為寬螢幕
 st.set_page_config(page_title="雲林美食地圖 | Monlu Studio", page_icon="🍲", layout="wide")
 
-# --- CSS 注入：自訂背景色、字體顏色與手機版地圖高度調整 ---
+# --- 初始化 Supabase 連線 ---
+@st.cache_resource
+def init_supabase():
+    url = st.secrets["SUPABASE_URL"]
+    key = st.secrets["SUPABASE_KEY"]
+    return create_client(url, key)
+
+supabase = init_supabase()
+
+# 從 Supabase 讀取店家資料
+def load_stores():
+    try:
+        response = supabase.table("stores").select("*").execute()
+        return response.data if response.data else []
+    except Exception as e:
+        st.error(f"讀取雲端資料庫失敗: {e}")
+        return []
+
+stores_data = load_stores()
+
+# --- CSS 注入：自訂背景色 #f7dad2、字體顏色與手機版地圖高度調整 ---
 st.markdown(
     f"""
     <style>
@@ -50,11 +71,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-DATA_FILE = "stores.json"
 TAGS_FILE = "tags.json"
-
-# --- 輔助函數：讀取資料 ---
-def load_json(file_path, default_value):
+def load_tags(file_path, default_value):
     if not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
         return default_value
     try:
@@ -63,14 +81,13 @@ def load_json(file_path, default_value):
     except:
         return default_value
 
-stores_data = load_json(DATA_FILE, [])
 default_tags = {
     "district": ["虎尾", "斗六", "其他雲林鄉鎮", "外縣市"],
     "category": ["正餐", "小吃", "甜點", "咖啡", "飲品"],
     "type": ["聚餐", "約會", "放鬆"],
     "tier": ["IG REELS拍攝店家", "LINE社群 上榜名單", "WEN日常美食推薦"]
 }
-tags_data = load_json(TAGS_FILE, default_tags)
+tags_data = load_tags(TAGS_FILE, default_tags)
 
 # --- 側邊欄：進階篩選器 ---
 st.sidebar.header("🔍 雲林美食探索")
@@ -115,15 +132,15 @@ st.title("Wen's life 雲林推薦美食地圖")
 st.markdown(f"目前為您篩選出 **{len(filtered_stores)}** 間精選店家：")
 
 if not filtered_stores:
-    st.info("💡 目前沒有符合篩選條件的店家，請嘗試調整側邊欄的篩選條件。")
+    st.info("💡 目前資料庫尚無資料，請透過後台新增店家。")
 else:
     map_col, list_col = st.columns([1.2, 1])
 
     with map_col:
         st.subheader("🗺️ 地圖導覽")
         
-        lats = [s.get("lat", 23.708) for s in filtered_stores]
-        lons = [s.get("lon", 120.431) for s in filtered_stores]
+        lats = [s.get("lat", 23.708) for s in filtered_stores if s.get("lat")]
+        lons = [s.get("lon", 120.431) for s in filtered_stores if s.get("lon")]
         center_lat = sum(lats) / len(lats) if lats else 23.7080
         center_lon = sum(lons) / len(lons) if lons else 120.4312
 
@@ -136,13 +153,15 @@ else:
         for store in filtered_stores:
             lat = store.get("lat")
             lon = store.get("lon")
+            if not lat or not lon:
+                continue
             name = store.get("name", "")
             subtitle = store.get("subtitle", "")
             tier = store.get("tier", "")
             district = store.get("district", "")
             
             cat_val = store.get("category", "")
-            cat_str = ", ".join(cat_val) if isinstance(cat_val, list) else cat_val
+            cat_str = ", ".join(cat_val) if isinstance(cat_val, list) else str(cat_val)
             
             types = ", ".join(store.get("types", [])) if store.get("types") else "無"
             price = store.get("price_range", "未標註")
@@ -225,7 +244,6 @@ else:
             name = store.get('name', '')
             subtitle = store.get('subtitle', '')
             
-            # 店名與副標
             header_html = f"""
             <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px;">
                 <h3 style="margin: 0; font-size: 18px; color: #803c34;">{name}</h3>
@@ -245,12 +263,11 @@ else:
                 {header_html}
             """
             
-            # 店家詳細介紹文字移到標籤上方、店名下方
             if store.get("description"):
                 card_html += f"<p style='margin: 0 0 8px 0; font-size: 13px; color: #4a403f !important; line-height: 1.4;'>{store.get('description')}</p>"
 
             cat_val = store.get("category", "")
-            cat_display = ", ".join(cat_val) if isinstance(cat_val, list) else cat_val
+            cat_display = ", ".join(cat_val) if isinstance(cat_val, list) else str(cat_val)
             
             tags_html = f"<span style='background-color:#d8af9c; color:#803c34; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:bold;'>📍 {store.get('district')}</span> "
             tags_html += f"<span style='background-color:#d8af9c; color:#803c34; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:bold;'>🍽️ {cat_display}</span> "
@@ -264,7 +281,6 @@ else:
             if store.get("price_range"):
                 card_html += f"<p style='margin: 0 0 6px 0; font-size: 12px; color: #803c34;'>💰 消費均消：{store.get('price_range')}</p>"
             
-            # 內嵌按鈕
             btn_html = "<div style='display: flex; gap: 8px; margin-top: 10px;'>"
             if store.get("ig_url"):
                 btn_html += f"<a href='{store.get('ig_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 6px 10px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: bold; border: 1px solid #803c34;'>📸 IG 介紹</a>"
