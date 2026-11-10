@@ -183,5 +183,100 @@
         "map_url": "https://www.google.com.tw/maps/place/%E6%9D%BE%E5%B1%8B%E6%B4%8B%E9%A2%A8%E5%92%8C%E9%A3%9F%E9%A4%A8/@23.7107274,120.5418634,912m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346ec83a10b2956d:0xb11995106d8dd040!8m2!3d23.7107225!4d120.5444437!16s%2Fg%2F1td1b4_g?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
         "lat": 23.7107225,
         "lon": 120.5444437
+    },
+    {
+        "name": "一撇爌肉飯",
+        "subtitle": "清晨五點就在排隊的控肉飯",
+        "description": "全雲林最好吃的控肉飯之一\n每天只開凌晨4:30~早上10:00，是許多老饕魂牽夢縈的美好滋味\n為了他可以凌晨就爬起來!",
+        "price_range": "50-100",
+        "district": "虎尾",
+        "category": [
+            "正餐",
+            "小吃",
+            "東方料理(中 日 韓  東南亞 中東)"
+        ],
+        "types": [
+            "頂級味蕾饗宴"
+        ],
+        "tier": "LINE社群 金賞名單",
+        "ig_url": "",
+        "map_url": "https://www.google.com.tw/maps/place/%E4%B8%80%E6%92%87%E7%88%8C%E8%82%89%E9%A3%AF/@23.7065393,120.4273948,912m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346eb0a9876fd351:0xef6d2037cce523cb!8m2!3d23.7065344!4d120.4299751!16s%2Fg%2F11c42fddtr?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.7065344,
+        "lon": 120.4299751
+    },
+    {
+        "name": "偷偷飯糰",
+        "subtitle": "虎尾好吃的早午餐店",
+        "description": "以炸飯糰與烤飯糰為主角的早午餐拼盤餐廳\n料理的顏值與味道都具相當水準!",
+        "price_range": "150-280",
+        "district": "虎尾",
+        "category": [
+            "正餐",
+            "早午餐"
+        ],
+        "types": [
+            "約會",
+            "獨處"
+        ],
+        "tier": "LINE社群 金賞名單",
+        "ig_url": "https://www.instagram.com/toutou.onigiri/",
+        "map_url": "https://www.google.com.tw/maps/place/%E5%81%B7%E5%81%B7%E9%A3%AF%E7%B3%B0/@23.7066276,120.426698,912m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346eb16ceea9d52b:0xb9029955ae158cd7!8m2!3d23.7066227!4d120.4292783!16s%2Fg%2F11rcs54k7k?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.7066227,
+        "lon": 120.4292783
+    },
+    {
+        "name": "虎秋文昌雞",
+        "subtitle": "超嫩口的文昌雞飯盒",
+        "description": "文昌雞與鼓油雞相當嫩口!口感似海南雞飯\n米飯與青菜烹煮時都加入了雞油與雞高湯，鮮為迷人\n是附近居民與虎科學生的愛店",
+        "price_range": "110~190",
+        "district": "虎尾",
+        "category": [
+            "正餐",
+            "東方料理(中 日 韓  東南亞 中東)"
+        ],
+        "types": [
+            "頂級味蕾饗宴"
+        ],
+        "tier": "LINE社群 金賞名單",
+        "ig_url": "https://www.instagram.com/wenchang_huwei/",
+        "map_url": "https://www.google.com.tw/maps/place/%E8%99%8E%E7%A7%8B%E6%96%87%E6%98%8C%E9%9B%9E/@23.7083097,120.4324803,912m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346eb132ac238bcf:0xa67dc9bcc6df2ffd!8m2!3d23.7083048!4d120.4350606!16s%2Fg%2F11sb0bxc0f?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.7083048,
+        "lon": 120.4350606
+    },
+    {
+        "name": "禾所在",
+        "subtitle": "虎尾最推的輕食餐盒",
+        "description": "料理口味與食材分量都平衡的相當不錯的中式餐盒\n從開幕至今每逢餐期客人總是絡繹不絕，是外食族的美味好朋友",
+        "price_range": "110-165",
+        "district": "虎尾",
+        "category": [
+            "正餐",
+            "東方料理(中 日 韓  東南亞 中東)"
+        ],
+        "types": [
+            "頂級味蕾饗宴"
+        ],
+        "tier": "LINE社群 金賞名單",
+        "ig_url": "https://www.instagram.com/hodining_2026/",
+        "map_url": "https://www.google.com.tw/maps/place/%E7%A6%BE%E6%89%80%E5%9C%A8+HO+DINING+%E4%B8%AD%E5%BC%8F%E8%BC%95%E9%A3%9F%E9%A4%90%E7%9B%92/@23.7049076,120.4275691,912m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346eb10a7e85615b:0x9944166e73e7a346!8m2!3d23.7049027!4d120.4301494!16s%2Fg%2F11z50fx82l?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.7049027,
+        "lon": 120.4301494
+    },
+    {
+        "name": "虎尾地瓜球",
+        "subtitle": "便宜好吃的小點心",
+        "description": "一顆只要一元的地瓜球,味道口感也不遜色\n每到下午總會大排長龍!\n這裡也飯受其他地瓜點心,如地瓜薯條 地瓜牛奶等",
+        "price_range": "20-50",
+        "district": "虎尾",
+        "category": [
+            "小吃",
+            "點心"
+        ],
+        "types": [],
+        "tier": "WEN日常美食推薦",
+        "ig_url": "",
+        "map_url": "https://www.google.com.tw/maps/place/%E8%99%8E%E5%B0%BE%E5%9C%B0%E7%93%9C%E7%90%83/@23.7063075,120.4218931,3648m/data=!3m1!1e3!4m6!3m5!1s0x346eb0a8f6e2404f:0x81e6b688374add13!8m2!3d23.708044!4d120.426286!16s%2Fg%2F11f3n1fgn7?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.708044,
+        "lon": 120.426286
     }
 ]
