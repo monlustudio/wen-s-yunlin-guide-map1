@@ -98,7 +98,7 @@ if "不指定" not in selected_types and len(selected_types) > 0:
     ]
 
 if selected_tiers:
-    filtered_stores = [s for s in filtered_stores if s.get("tier") in selected_tiers]
+    filtered_stores = [s for s in filtered_stores if s.get("tier"] in selected_tiers]
 
 # --- 主畫面佈局 ---
 st.title("Wen's life 雲林推薦美食地圖")
@@ -202,14 +202,13 @@ else:
         
         for store in filtered_stores:
             tier = store.get("tier", "")
+            
+            # 統一使用指定的背景色 #f7dad2，邊框依據等級或維持一致的精緻邊框
             if "IG REELS" in tier:
-                card_bg = "rgba(182, 37, 36, 0.22)"
                 card_border = "#b62524"
             elif "LINE社群" in tier:
-                card_bg = "rgba(185, 121, 38, 0.22)"
                 card_border = "#b97926"
             else:
-                card_bg = "rgba(204, 165, 155, 0.35)"
                 card_border = "#cca59b"
 
             name = store.get('name', '')
@@ -217,7 +216,7 @@ else:
             
             # 店名與副標（帶有垂直線分隔，副標顏色稍淺）
             header_html = f"""
-            <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px;">
+            <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px;">
                 <h3 style="margin: 0; font-size: 18px; color: #803c34;">{name}</h3>
                 <span style="font-size: 14px; color: #a6635b; font-weight: 500;">│ {subtitle}</span>
             </div>
@@ -225,7 +224,7 @@ else:
 
             card_html = f"""
             <div style="
-                background-color: {card_bg};
+                background-color: #f7dad2;
                 border: 1.5px solid {card_border};
                 border-radius: 10px;
                 padding: 14px 16px;
@@ -234,6 +233,10 @@ else:
             ">
                 {header_html}
             """
+            
+            # 店家詳細介紹文字（放在標籤上方、店名下方，深灰色文字）
+            if store.get("description"):
+                card_html += f"<p style='margin: 0 0 10px 0; font-size: 13px; color: #4a403f !important; line-height: 1.4;'>{store.get('description')}</p>"
             
             cat_val = store.get("category", "")
             cat_display = ", ".join(cat_val) if isinstance(cat_val, list) else cat_val
@@ -245,14 +248,10 @@ else:
             for t in store_types:
                 tags_html += f"<span style='background-color:#803c34; color:#fff; padding:2px 8px; border-radius:4px; font-size:11px;'>🏷️ {t}</span> "
             
-            card_html += f"<div style='margin-bottom: 8px;'>{tags_html}</div>"
+            card_html += f"<div style='margin-bottom: 6px;'>{tags_html}</div>"
             
             if store.get("price_range"):
                 card_html += f"<p style='margin: 0 0 6px 0; font-size: 12px; color: #803c34;'>💰 消費均消：{store.get('price_range')}</p>"
-                
-            # 店家詳細介紹文字改為深灰色 (#4a403f)
-            if store.get("description"):
-                card_html += f"<p style='margin: 0 0 10px 0; font-size: 13px; color: #4a403f !important; line-height: 1.4;'>{store.get('description')}</p>"
             
             # 內嵌按鈕
             btn_html = "<div style='display: flex; gap: 8px; margin-top: 10px;'>"
@@ -263,5 +262,7 @@ else:
             btn_html += "</div>"
             
             card_html += btn_html + "</div>"
+            
+            st.markdown(card_html, unsafe_allow_html=True)
             
             st.markdown(card_html, unsafe_allow_html=True)
