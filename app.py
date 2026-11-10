@@ -8,7 +8,7 @@ from streamlit_folium import st_folium
 # 設定頁面佈局為寬螢幕
 st.set_page_config(page_title="雲林美食地圖 | Monlu Studio", page_icon="☁️", layout="wide")
 
-# --- CSS 注入：自訂背景色、字體顏色、手機版主標題單行顯示與地圖高度優化 ---
+# --- CSS 注入：自訂背景色、字體顏色、手機版主標題放大、頂部切齊與卡片副標放大 ---
 st.markdown(
     f"""
     <style>
@@ -36,9 +36,9 @@ st.markdown(
         color: #803c34 !important;
     }}
 
-    /* 📱 手機版主標題優化：讓「Wen's life 雲林美食地圖」在手機上不換行、字體縮小 */
+    /* 📱 手機版主標題放大與單行顯示 */
     h1 {{
-        font-size: 6.2vw !important;
+        font-size: 7.5vw !important;
         white-space: nowrap !important;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -47,6 +47,22 @@ st.markdown(
     @media (min-width: 768px) {{
         h1 {{
             font-size: 2.2rem !important;
+        }}
+    }}
+
+    /* 🖥️ 電腦版優化：讓地圖與右側「店家清單」標題的頂部完美切齊對齊 */
+    @media (min-width: 768px) {{
+        /* 移除地圖上方欄位的預設間距 */
+        div[data-testid="column"]:first-child {{
+            margin-top: 0px !important;
+        }}
+        div[data-testid="column"]:first-child div.stMarkdown {{
+            display: none; /* 隱藏地圖欄位上方的空白 Markdown，確保高度一致 */
+        }}
+        /* 讓右側清單的第一個標題與地圖頂部對齊 */
+        div[data-testid="column"]:last-child h3:first-of-type {{
+            margin-top: 0px !important;
+            padding-top: 0px !important;
         }}
     }}
 
@@ -133,7 +149,9 @@ else:
     map_col, list_col = st.columns([1.2, 1])
 
     with map_col:
-        # 已移除「🗺️ 地圖導覽」標題
+        # 佔位用的空白 Markdown，用來配合頂部對齊排版
+        st.markdown("") 
+        
         lats = [s.get("lat", 23.708) for s in filtered_stores]
         lons = [s.get("lon", 120.431) for s in filtered_stores]
         center_lat = sum(lats) / len(lats) if lats else 23.7080
@@ -219,7 +237,7 @@ else:
 
         st_folium(m, width=None, height=550, use_container_width=True)
         
-        # 移至地圖下方的篩選結果數量提示
+        # 放在地圖下方的篩選結果數量提示
         st.markdown(f"📍 目前為您篩選出 **{len(filtered_stores)}** 間精選店家：")
 
     with list_col:
@@ -239,7 +257,8 @@ else:
 
             store_name = store.get('name', '')
             store_sub = store.get('subtitle', '')
-            title_display = f"{store_name} <span style='font-size: 13px; font-weight: normal; color: #803c34;'>| {store_sub}</span>" if store_sub else store_name
+            # 放大副標字體（從 13px 提升至 14px，並加深一點點讓閱讀更舒適）
+            title_display = f"{store_name} <span style='font-size: 14px; font-weight: 500; color: #702f28;'>| {store_sub}</span>" if store_sub else store_name
 
             card_html = f"""
             <div style="
@@ -280,4 +299,5 @@ else:
             
             card_html += btn_html + "</div>"
             
+            st.markdown(card_html, unsafe_allow_html=True)
             st.markdown(card_html, unsafe_allow_html=True)
