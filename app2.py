@@ -109,7 +109,7 @@ st.markdown(
 st.title("🛠️ 雲林美食後台管理系統")
 st.markdown("管理所有店家資料與標籤分類（資料將直接同步至 Supabase 雲端資料庫）。")
 
-tab1, tab2, tab3 = st.tabs(["➕ 新增店家", "📋 店家管理 (編輯/刪除)", "🏷️ 標籤管理"])
+tab1, tab2, tab3 = st.tabs(["➕ 新選店家", "📋 店家管理 (編輯/刪除)", "🏷️ 標籤管理"])
 
 # ==========================================
 # 頁面一：新增店家
@@ -163,9 +163,12 @@ with tab1:
                 if not f_lat or not f_lon:
                     st.error("❌ 建立失敗：無法從 Google Maps 網址中解析出精準座標！")
                 else:
-                    # 強制進行安全編碼處理，杜絕 ASCII 轉碼報錯
-                    safe_map_url = str(map_url).strip()
-                    safe_ig_url = str(ig_url).strip() if ig_url else ""
+                    # 徹底將網址轉為標準 safe ASCII 字串，避免 httpx 編碼崩潰
+                    raw_map_url = str(map_url).strip()
+                    safe_map_url = urllib.parse.quote(raw_map_url, safe=':/?=&%-_.~#!')
+                    
+                    raw_ig_url = str(ig_url).strip() if ig_url else ""
+                    safe_ig_url = urllib.parse.quote(raw_ig_url, safe=':/?=&%-_.~#!') if raw_ig_url else ""
 
                     new_store = {
                         "name": str(name).strip(),
@@ -251,6 +254,12 @@ with tab2:
                     if f_lat and f_lon:
                         new_lat, new_lon = f_lat, f_lon
 
+                raw_e_map = str(e_map_url).strip() if e_map_url else ""
+                safe_e_map = urllib.parse.quote(raw_e_map, safe=':/?=&%-_.~#!') if raw_e_map else ""
+
+                raw_e_ig = str(e_ig_url).strip() if e_ig_url else ""
+                safe_e_ig = urllib.parse.quote(raw_e_ig, safe=':/?=&%-_.~#!') if raw_e_ig else ""
+
                 updated_store_dict = {
                     "name": str(e_name).strip(),
                     "subtitle": str(e_subtitle).strip(),
@@ -260,8 +269,8 @@ with tab2:
                     "category": e_category,
                     "types": e_types,
                     "tier": str(e_tier).strip(),
-                    "ig_url": str(e_ig_url).strip() if e_ig_url else "",
-                    "map_url": str(e_map_url).strip(),
+                    "ig_url": safe_e_ig,
+                    "map_url": safe_e_map,
                     "lat": float(new_lat),
                     "lon": float(new_lon)
                 }
@@ -313,7 +322,7 @@ with tab3:
     st.write(f"目前現有的標籤：`{current_tags}`")
     
     new_tag_name = st.text_input("新增標籤名稱", placeholder="例：早午餐", key="new_tag_input")
-    if st.button("➕ 新選此標籤"):
+    if st.button("➕ 新增此標籤"):
         if new_tag_name and new_tag_name not in current_tags:
             current_tags.append(new_tag_name)
             tags_data[tag_key] = current_tags
