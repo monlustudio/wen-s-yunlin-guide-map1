@@ -8,7 +8,7 @@ from streamlit_folium import st_folium
 # 設定頁面佈局為寬螢幕
 st.set_page_config(page_title="雲林美食地圖 | Monlu Studio", page_icon="🍲", layout="wide")
 
-# --- CSS 注入：自訂背景色、字體顏色與全域樣式 ---
+# --- CSS 注入：自訂背景色、字體顏色與標籤色 #deb37f ---
 st.markdown(
     f"""
     <style>
@@ -101,7 +101,7 @@ if selected_tiers:
     filtered_stores = [s for s in filtered_stores if s.get("tier") in selected_tiers]
 
 # --- 主畫面佈局 ---
-st.title("Wen's life 雲林美食地圖 ")
+st.title("🍲 雲林美食與空間地圖")
 st.markdown(f"目前為您篩選出 **{len(filtered_stores)}** 間精選店家：")
 
 if not filtered_stores:
@@ -202,18 +202,17 @@ else:
         
         for store in filtered_stores:
             tier = store.get("tier", "")
-            # 依據不同推薦等級設定 35% 透明度的柔和淡化背景色與邊框
+            # 卡片背景改為 35% 透明度 (0.35)
             if "IG REELS" in tier:
-                card_bg = "rgba(182, 37, 36, 0.22)"
+                card_bg = "rgba(182, 37, 36, 0.35)"
                 card_border = "#b62524"
             elif "LINE社群" in tier:
-                card_bg = "rgba(185, 121, 38, 0.22)"
+                card_bg = "rgba(185, 121, 38, 0.35)"
                 card_border = "#b97926"
             else:
-                card_bg = "rgba(204, 165, 155, 0.35)"
+                card_bg = "rgba(204, 165, 155, 0.45)"
                 card_border = "#cca59b"
 
-            # 建立卡片 HTML 結構
             card_html = f"""
             <div style="
                 background-color: {card_bg};
@@ -246,7 +245,7 @@ else:
             if store.get("description"):
                 card_html += f"<p style='margin: 0 0 10px 0; font-size: 13px; color: #803c34; line-height: 1.4;'>{store.get('description')}</p>"
             
-            # 內嵌按鈕 HTML 區塊
+            # 內嵌按鈕
             btn_html = "<div style='display: flex; gap: 8px; margin-top: 10px;'>"
             if store.get("ig_url"):
                 btn_html += f"<a href='{store.get('ig_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 6px 10px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: bold; border: 1px solid #803c34;'>📸 IG 介紹</a>"
