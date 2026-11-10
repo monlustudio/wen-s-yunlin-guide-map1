@@ -8,7 +8,7 @@ from streamlit_folium import st_folium
 # 設定頁面佈局為寬螢幕
 st.set_page_config(page_title="雲林美食地圖 | Monlu Studio", page_icon="🍲", layout="wide")
 
-# --- CSS 注入：自訂背景色 #f7dad2、字體顏色與標籤色 #deb37f ---
+# --- CSS 注入：自訂背景色、字體顏色與手機版地圖高度調整 ---
 st.markdown(
     f"""
     <style>
@@ -34,6 +34,16 @@ st.markdown(
     }}
     [data-testid="stSidebar"] span[data-baseweb="tag"] span {{
         color: #803c34 !important;
+    }}
+
+    /* 📱 手機版響應式設定：當螢幕寬度小於 768px 時，強制縮小地圖容器高度約 1/3 螢幕 (約 300px) */
+    @media (max-width: 768px) {{
+        iframe[title="streamlit_folium.st_folium"] {{
+            height: 300px !important;
+        }}
+        div[data-testid="stIFrame"] {{
+            height: 300px !important;
+        }}
     }}
     </style>
     """,
@@ -195,7 +205,7 @@ else:
                 popup=folium.Popup(popup_html, max_width=250)
             ).add_to(m)
 
-        st_folium(m, width=None, height=550, use_container_width=True)
+        st_folium(m, width=None, height=300, use_container_width=True)
 
     with list_col:
         st.subheader("📋 店家清單")
@@ -235,7 +245,7 @@ else:
                 {header_html}
             """
             
-            # 讓店家詳細介紹文字移到標籤上方、店名下方
+            # 店家詳細介紹文字移到標籤上方、店名下方
             if store.get("description"):
                 card_html += f"<p style='margin: 0 0 8px 0; font-size: 13px; color: #4a403f !important; line-height: 1.4;'>{store.get('description')}</p>"
 
