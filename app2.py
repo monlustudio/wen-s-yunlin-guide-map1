@@ -163,9 +163,9 @@ with tab1:
                 if not f_lat or not f_lon:
                     st.error("❌ 建立失敗：無法從 Google Maps 網址中解析出精準座標！")
                 else:
-                    # 確保所有網址與文字都完全解碼並轉為標準 UTF-8 字串，避免 ASCII 編碼錯誤
-                    clean_map_url = urllib.parse.unquote(map_url.strip())
-                    clean_ig_url = urllib.parse.unquote(ig_url.strip()) if ig_url else ""
+                    # 強制進行安全編碼處理，杜絕 ASCII 轉碼報錯
+                    safe_map_url = str(map_url).strip()
+                    safe_ig_url = str(ig_url).strip() if ig_url else ""
 
                     new_store = {
                         "name": str(name).strip(),
@@ -176,8 +176,8 @@ with tab1:
                         "category": category,
                         "types": store_types,
                         "tier": str(tier).strip(),
-                        "ig_url": clean_ig_url,
-                        "map_url": clean_map_url,
+                        "ig_url": safe_ig_url,
+                        "map_url": safe_map_url,
                         "lat": float(f_lat),
                         "lon": float(f_lon)
                     }
@@ -251,9 +251,6 @@ with tab2:
                     if f_lat and f_lon:
                         new_lat, new_lon = f_lat, f_lon
 
-                clean_e_map_url = urllib.parse.unquote(e_map_url.strip()) if e_map_url else ""
-                clean_e_ig_url = urllib.parse.unquote(e_ig_url.strip()) if e_ig_url else ""
-
                 updated_store_dict = {
                     "name": str(e_name).strip(),
                     "subtitle": str(e_subtitle).strip(),
@@ -263,8 +260,8 @@ with tab2:
                     "category": e_category,
                     "types": e_types,
                     "tier": str(e_tier).strip(),
-                    "ig_url": clean_e_ig_url,
-                    "map_url": clean_e_map_url,
+                    "ig_url": str(e_ig_url).strip() if e_ig_url else "",
+                    "map_url": str(e_map_url).strip(),
                     "lat": float(new_lat),
                     "lon": float(new_lon)
                 }
@@ -316,7 +313,7 @@ with tab3:
     st.write(f"目前現有的標籤：`{current_tags}`")
     
     new_tag_name = st.text_input("新增標籤名稱", placeholder="例：早午餐", key="new_tag_input")
-    if st.button("➕ 新增此標籤"):
+    if st.button("➕ 新選此標籤"):
         if new_tag_name and new_tag_name not in current_tags:
             current_tags.append(new_tag_name)
             tags_data[tag_key] = current_tags
