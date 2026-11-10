@@ -101,7 +101,7 @@ if selected_tiers:
     filtered_stores = [s for s in filtered_stores if s.get("tier") in selected_tiers]
 
 # --- 主畫面佈局 ---
-st.title("🍲 雲林美食與空間地圖")
+st.title("Wen's life 雲林推薦美食地圖")
 st.markdown(f"目前為您篩選出 **{len(filtered_stores)}** 間精選店家：")
 
 if not filtered_stores:
@@ -204,13 +204,13 @@ else:
             tier = store.get("tier", "")
             # 卡片背景改為 35% 透明度 (0.35)
             if "IG REELS" in tier:
-                card_bg = "rgba(182, 37, 36, 0.35)"
+                card_bg = "rgba(182, 37, 36, 0.22)"
                 card_border = "#b62524"
             elif "LINE社群" in tier:
-                card_bg = "rgba(185, 121, 38, 0.35)"
+                card_bg = "rgba(185, 121, 38, 0.22)"
                 card_border = "#b97926"
             else:
-                card_bg = "rgba(204, 165, 155, 0.45)"
+                card_bg = "rgba(204, 165, 155, 0.35)"
                 card_border = "#cca59b"
 
             card_html = f"""
