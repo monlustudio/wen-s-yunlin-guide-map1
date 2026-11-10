@@ -8,7 +8,7 @@ from streamlit_folium import st_folium
 # 設定頁面佈局為寬螢幕
 st.set_page_config(page_title="雲林美食地圖 | Monlu Studio", page_icon="☁️", layout="wide")
 
-# --- CSS 注入：自訂背景色、字體顏色、精巧卡片排版與手機版地圖縮小 ---
+# --- CSS 注入：自訂背景色、字體顏色、手機版主標題單行顯示與地圖高度優化 ---
 st.markdown(
     f"""
     <style>
@@ -34,6 +34,20 @@ st.markdown(
     }}
     [data-testid="stSidebar"] span[data-baseweb="tag"] span {{
         color: #803c34 !important;
+    }}
+
+    /* 📱 手機版主標題優化：讓「Wen's life 雲林美食地圖」在手機上不換行、字體縮小 */
+    h1 {{
+        font-size: 6.2vw !important;
+        white-space: nowrap !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 0.2rem !important;
+    }}
+    @media (min-width: 768px) {{
+        h1 {{
+            font-size: 2.2rem !important;
+        }}
     }}
 
     /* 📱 手機版響應式設定：當螢幕寬度小於 768px 時，強制縮小地圖容器高度約 1/3 螢幕 (約 300px) */
@@ -112,7 +126,6 @@ if selected_tiers:
 
 # --- 主畫面佈局 ---
 st.title("Wen's life 雲林美食地圖")
-st.markdown(f"目前為您篩選出 **{len(filtered_stores)}** 間精選店家：")
 
 if not filtered_stores:
     st.info("💡 目前沒有符合篩選條件的店家，請嘗試調整側邊欄的篩選條件。")
@@ -120,8 +133,7 @@ else:
     map_col, list_col = st.columns([1.2, 1])
 
     with map_col:
-        st.subheader("🗺️ 地圖導覽")
-        
+        # 已移除「🗺️ 地圖導覽」標題
         lats = [s.get("lat", 23.708) for s in filtered_stores]
         lons = [s.get("lon", 120.431) for s in filtered_stores]
         center_lat = sum(lats) / len(lats) if lats else 23.7080
@@ -206,13 +218,15 @@ else:
             ).add_to(m)
 
         st_folium(m, width=None, height=550, use_container_width=True)
+        
+        # 移至地圖下方的篩選結果數量提示
+        st.markdown(f"📍 目前為您篩選出 **{len(filtered_stores)}** 間精選店家：")
 
     with list_col:
         st.subheader("📋 店家清單")
         
         for store in filtered_stores:
             tier = store.get("tier", "")
-            # 依據不同推薦等級設定柔和淡化背景色與邊框
             if "IG REELS" in tier:
                 card_bg = "rgba(182, 37, 36, 0.22)"
                 card_border = "#b62524"
@@ -225,10 +239,8 @@ else:
 
             store_name = store.get('name', '')
             store_sub = store.get('subtitle', '')
-            # 店名與副標結合，中間加直槓
             title_display = f"{store_name} <span style='font-size: 13px; font-weight: normal; color: #803c34;'>| {store_sub}</span>" if store_sub else store_name
 
-            # 建立精巧緊湊的卡片 HTML 結構
             card_html = f"""
             <div style="
                 background-color: {card_bg};
@@ -241,14 +253,12 @@ else:
                 <h3 style="margin: 0 0 6px 0; font-size: 16px; color: #803c34;">{title_display}</h3>
             """
             
-            # 詳細介紹文案移到標籤上方
             if store.get("description"):
                 card_html += f"<p style='margin: 0 0 6px 0; font-size: 12px; color: #803c34; line-height: 1.3;'>{store.get('description')}</p>"
             
             cat_val = store.get("category", "")
             cat_display = ", ".join(cat_val) if isinstance(cat_val, list) else cat_val
             
-            # 調整標籤顏色：背景改為清晰的淺米金色 #decfbd，文字為深咖啡色 #803c34
             tags_html = f"<span style='background-color:#decfbd; color:#803c34; padding:2px 6px; border-radius:4px; font-size:11px; font-weight:bold; border: 1px solid #803c34;'>📍 {store.get('district')}</span> "
             tags_html += f"<span style='background-color:#decfbd; color:#803c34; padding:2px 6px; border-radius:4px; font-size:11px; font-weight:bold; border: 1px solid #803c34;'>🍽️ {cat_display}</span> "
             
@@ -261,7 +271,6 @@ else:
             if store.get("price_range"):
                 card_html += f"<p style='margin: 0 0 6px 0; font-size: 12px; color: #803c34;'>💰 消費均消：{store.get('price_range')}</p>"
             
-            # 內嵌按鈕 HTML 區塊（縮小高度與間距）
             btn_html = "<div style='display: flex; gap: 6px; margin-top: 6px;'>"
             if store.get("ig_url"):
                 btn_html += f"<a href='{store.get('ig_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 4px 8px; border-radius: 5px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #803c34;'>📸 IG 介紹</a>"
