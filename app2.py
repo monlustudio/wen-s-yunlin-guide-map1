@@ -19,7 +19,6 @@ def init_supabase():
 
 supabase = init_supabase()
 
-# --- 載入與儲存標籤 ---
 TAGS_FILE = "tags.json"
 
 def load_json(file_path, default_value):
@@ -164,6 +163,10 @@ with tab1:
                 if not f_lat or not f_lon:
                     st.error("❌ 建立失敗：無法從 Google Maps 網址中解析出精準座標！")
                 else:
+                    # 確保所有網址與文字都完全解碼並轉為標準 UTF-8 字串，避免 ASCII 編碼錯誤
+                    clean_map_url = urllib.parse.unquote(map_url.strip())
+                    clean_ig_url = urllib.parse.unquote(ig_url.strip()) if ig_url else ""
+
                     new_store = {
                         "name": str(name).strip(),
                         "subtitle": str(subtitle).strip(),
@@ -173,8 +176,8 @@ with tab1:
                         "category": category,
                         "types": store_types,
                         "tier": str(tier).strip(),
-                        "ig_url": str(ig_url).strip() if ig_url else "",
-                        "map_url": str(map_url).strip(),
+                        "ig_url": clean_ig_url,
+                        "map_url": clean_map_url,
                         "lat": float(f_lat),
                         "lon": float(f_lon)
                     }
@@ -248,6 +251,9 @@ with tab2:
                     if f_lat and f_lon:
                         new_lat, new_lon = f_lat, f_lon
 
+                clean_e_map_url = urllib.parse.unquote(e_map_url.strip()) if e_map_url else ""
+                clean_e_ig_url = urllib.parse.unquote(e_ig_url.strip()) if e_ig_url else ""
+
                 updated_store_dict = {
                     "name": str(e_name).strip(),
                     "subtitle": str(e_subtitle).strip(),
@@ -257,8 +263,8 @@ with tab2:
                     "category": e_category,
                     "types": e_types,
                     "tier": str(e_tier).strip(),
-                    "ig_url": str(e_ig_url).strip() if e_ig_url else "",
-                    "map_url": str(e_map_url).strip(),
+                    "ig_url": clean_e_ig_url,
+                    "map_url": clean_e_map_url,
                     "lat": float(new_lat),
                     "lon": float(new_lon)
                 }
