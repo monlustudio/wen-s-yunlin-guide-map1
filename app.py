@@ -8,7 +8,7 @@ from streamlit_folium import st_folium
 # 設定頁面佈局為寬螢幕
 st.set_page_config(page_title="雲林美食地圖 | Monlu Studio", page_icon="☁️", layout="wide")
 
-# --- CSS 注入：自訂背景色、字體顏色與全域樣式 ---
+# --- CSS 注入：自訂背景色、字體顏色、精巧卡片排版與手機版地圖縮小 ---
 st.markdown(
     f"""
     <style>
@@ -34,6 +34,16 @@ st.markdown(
     }}
     [data-testid="stSidebar"] span[data-baseweb="tag"] span {{
         color: #803c34 !important;
+    }}
+
+    /* 📱 手機版響應式設定：當螢幕寬度小於 768px 時，強制縮小地圖容器高度約 1/3 螢幕 (約 300px) */
+    @media (max-width: 768px) {{
+        iframe[title="streamlit_folium.st_folium"] {{
+            height: 300px !important;
+        }}
+        div[data-testid="stIFrame"] {{
+            height: 300px !important;
+        }}
     }}
     </style>
     """,
@@ -202,7 +212,7 @@ else:
         
         for store in filtered_stores:
             tier = store.get("tier", "")
-            # 依據不同推薦等級設定 35% 透明度的柔和淡化背景色與邊框
+            # 依據不同推薦等級設定柔和淡化背景色與邊框
             if "IG REELS" in tier:
                 card_bg = "rgba(182, 37, 36, 0.22)"
                 card_border = "#b62524"
@@ -213,45 +223,50 @@ else:
                 card_bg = "rgba(204, 165, 155, 0.35)"
                 card_border = "#cca59b"
 
-            # 建立卡片 HTML 結構
+            store_name = store.get('name', '')
+            store_sub = store.get('subtitle', '')
+            # 店名與副標結合，中間加直槓
+            title_display = f"{store_name} <span style='font-size: 13px; font-weight: normal; color: #803c34;'>| {store_sub}</span>" if store_sub else store_name
+
+            # 建立精巧緊湊的卡片 HTML 結構
             card_html = f"""
             <div style="
                 background-color: {card_bg};
                 border: 1.5px solid {card_border};
-                border-radius: 10px;
-                padding: 14px 16px;
-                margin-bottom: 14px;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+                border-radius: 8px;
+                padding: 10px 12px;
+                margin-bottom: 10px;
+                box-shadow: 0 1px 4px rgba(0,0,0,0.04);
             ">
-                <h3 style="margin: 0 0 4px 0; font-size: 18px; color: #803c34;">{store.get('name')}</h3>
-                <p style="margin: 0 0 6px 0; font-size: 12px; font-weight: bold; color: #803c34;"><code>{tier}</code></p>
-                <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: bold; color: #803c34;">{store.get('subtitle', '')}</p>
+                <h3 style="margin: 0 0 6px 0; font-size: 16px; color: #803c34;">{title_display}</h3>
             """
+            
+            # 詳細介紹文案移到標籤上方
+            if store.get("description"):
+                card_html += f"<p style='margin: 0 0 6px 0; font-size: 12px; color: #803c34; line-height: 1.3;'>{store.get('description')}</p>"
             
             cat_val = store.get("category", "")
             cat_display = ", ".join(cat_val) if isinstance(cat_val, list) else cat_val
             
-            tags_html = f"<span style='background-color:#d8af9c; color:#803c34; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:bold;'>📍 {store.get('district')}</span> "
-            tags_html += f"<span style='background-color:#d8af9c; color:#803c34; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:bold;'>🍽️ {cat_display}</span> "
+            # 調整標籤顏色：背景改為清晰的淺米金色 #decfbd，文字為深咖啡色 #803c34
+            tags_html = f"<span style='background-color:#decfbd; color:#803c34; padding:2px 6px; border-radius:4px; font-size:11px; font-weight:bold; border: 1px solid #803c34;'>📍 {store.get('district')}</span> "
+            tags_html += f"<span style='background-color:#decfbd; color:#803c34; padding:2px 6px; border-radius:4px; font-size:11px; font-weight:bold; border: 1px solid #803c34;'>🍽️ {cat_display}</span> "
             
             store_types = store.get("types", [])
             for t in store_types:
-                tags_html += f"<span style='background-color:#803c34; color:#fff; padding:2px 8px; border-radius:4px; font-size:11px;'>🏷️ {t}</span> "
+                tags_html += f"<span style='background-color:#decfbd; color:#803c34; padding:2px 6px; border-radius:4px; font-size:11px; border: 1px solid #803c34;'>🏷️ {t}</span> "
             
-            card_html += f"<div style='margin-bottom: 8px;'>{tags_html}</div>"
+            card_html += f"<div style='margin-bottom: 6px;'>{tags_html}</div>"
             
             if store.get("price_range"):
                 card_html += f"<p style='margin: 0 0 6px 0; font-size: 12px; color: #803c34;'>💰 消費均消：{store.get('price_range')}</p>"
-                
-            if store.get("description"):
-                card_html += f"<p style='margin: 0 0 10px 0; font-size: 13px; color: #803c34; line-height: 1.4;'>{store.get('description')}</p>"
             
-            # 內嵌按鈕 HTML 區塊
-            btn_html = "<div style='display: flex; gap: 8px; margin-top: 10px;'>"
+            # 內嵌按鈕 HTML 區塊（縮小高度與間距）
+            btn_html = "<div style='display: flex; gap: 6px; margin-top: 6px;'>"
             if store.get("ig_url"):
-                btn_html += f"<a href='{store.get('ig_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 6px 10px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: bold; border: 1px solid #803c34;'>📸 IG 介紹</a>"
+                btn_html += f"<a href='{store.get('ig_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 4px 8px; border-radius: 5px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #803c34;'>📸 IG 介紹</a>"
             if store.get("map_url"):
-                btn_html += f"<a href='{store.get('map_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 6px 10px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: bold; border: 1px solid #803c34;'>🗺️ Google 導航</a>"
+                btn_html += f"<a href='{store.get('map_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 4px 8px; border-radius: 5px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #803c34;'>🗺️ Google 導航</a>"
             btn_html += "</div>"
             
             card_html += btn_html + "</div>"
