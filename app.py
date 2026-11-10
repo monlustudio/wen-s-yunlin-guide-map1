@@ -202,7 +202,6 @@ else:
         
         for store in filtered_stores:
             tier = store.get("tier", "")
-            # 卡片背景改為 35% 透明度 (0.35)
             if "IG REELS" in tier:
                 card_bg = "rgba(182, 37, 36, 0.22)"
                 card_border = "#b62524"
