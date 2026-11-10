@@ -8,13 +8,13 @@ from streamlit_folium import st_folium
 # 設定頁面佈局為寬螢幕
 st.set_page_config(page_title="雲林美食地圖 | Monlu Studio", page_icon="🍲", layout="wide")
 
-# --- CSS 注入：自訂背景色、字體顏色與標籤色 #deb37f ---
+# --- CSS 注入：自訂背景色 #f7dad2、字體顏色與標籤色 #deb37f ---
 st.markdown(
     f"""
     <style>
-    /* 全局背景色 */
+    /* 全局背景色改成 #f7dad2 */
     .stApp {{
-        background-color: #e3bdaf;
+        background-color: #f7dad2;
     }}
     /* 側邊欄背景色 */
     [data-testid="stSidebar"] {{
@@ -202,20 +202,22 @@ else:
         
         for store in filtered_stores:
             tier = store.get("tier", "")
-            
             if "IG REELS" in tier:
+                card_bg = "rgba(182, 37, 36, 0.22)"
                 card_border = "#b62524"
             elif "LINE社群" in tier:
+                card_bg = "rgba(185, 121, 38, 0.22)"
                 card_border = "#b97926"
             else:
+                card_bg = "rgba(204, 165, 155, 0.35)"
                 card_border = "#cca59b"
 
             name = store.get('name', '')
             subtitle = store.get('subtitle', '')
             
-            # 店名與副標（垂直線分隔）
+            # 店名與副標
             header_html = f"""
-            <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px;">
+            <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px;">
                 <h3 style="margin: 0; font-size: 18px; color: #803c34;">{name}</h3>
                 <span style="font-size: 14px; color: #a6635b; font-weight: 500;">│ {subtitle}</span>
             </div>
@@ -223,7 +225,7 @@ else:
 
             card_html = f"""
             <div style="
-                background-color: #f7dad2;
+                background-color: {card_bg};
                 border: 1.5px solid {card_border};
                 border-radius: 10px;
                 padding: 14px 16px;
@@ -233,10 +235,10 @@ else:
                 {header_html}
             """
             
-            # 介紹文字（放標籤上方、店名下方）
+            # 讓店家詳細介紹文字移到標籤上方、店名下方
             if store.get("description"):
-                card_html += f"<p style='margin: 0 0 10px 0; font-size: 13px; color: #4a403f !important; line-height: 1.4;'>{store.get('description')}</p>"
-            
+                card_html += f"<p style='margin: 0 0 8px 0; font-size: 13px; color: #4a403f !important; line-height: 1.4;'>{store.get('description')}</p>"
+
             cat_val = store.get("category", "")
             cat_display = ", ".join(cat_val) if isinstance(cat_val, list) else cat_val
             
@@ -247,7 +249,7 @@ else:
             for t in store_types:
                 tags_html += f"<span style='background-color:#803c34; color:#fff; padding:2px 8px; border-radius:4px; font-size:11px;'>🏷️ {t}</span> "
             
-            card_html += f"<div style='margin-bottom: 6px;'>{tags_html}</div>"
+            card_html += f"<div style='margin-bottom: 8px;'>{tags_html}</div>"
             
             if store.get("price_range"):
                 card_html += f"<p style='margin: 0 0 6px 0; font-size: 12px; color: #803c34;'>💰 消費均消：{store.get('price_range')}</p>"
@@ -261,7 +263,5 @@ else:
             btn_html += "</div>"
             
             card_html += btn_html + "</div>"
-            
-            st.markdown(card_html, unsafe_allow_html=True)
             
             st.markdown(card_html, unsafe_allow_html=True)
