@@ -27,16 +27,22 @@
         "name": "春山里舍",
         "subtitle": "靜謐老宅茶館",
         "description": "日式聚落改建的老宅茶館 空間靜謐有氣質\n在這邊可以品嘗到上好的台灣手沖茶與手做甜點",
-        "price_range": "",
+        "price_range": "200-400",
         "district": "斗六",
         "category": [
-            "飲品"
+            "飲料",
+            "甜點",
+            "咖啡廳"
         ],
         "types": [
-            "聚餐"
+            "約會",
+            "聚餐",
+            "拍照打卡",
+            "質感空間",
+            "頂級味蕾饗宴"
         ],
         "tier": "IG REELS拍攝店家",
-        "ig_url": "",
+        "ig_url": "https://www.instagram.com/cobm.fnb/",
         "map_url": "https://www.google.com/maps/place/%E6%98%A5%E5%B1%B1%E9%87%8C%E8%88%8D%EF%BD%9C%E6%89%8B%E6%B2%96%E5%8F%B0%E7%81%A3%E8%8C%B6+(%E4%BC%91%E5%B8%AD%E6%97%A5%E4%BE%9D%E5%BA%97%E5%AE%B6IG%E5%85%AC%E5%91%8A)/@23.7086121,120.5376214,17z/data=!3m1!4b1!4m6!3m5!1s0x346ec9ea2c1c0bb1:0x4aa2d05fcf37d22b!8m2!3d23.7086072!4d120.5401963!16s%2Fg%2F11khkc8ls3?entry=ttu&g_ep=EgoyMDI2MTEwNC4wIKXMDSoASAFQAw%3D%3D",
         "lat": 23.7086072,
         "lon": 120.5401963
@@ -57,7 +63,7 @@
             "出去玩"
         ],
         "tier": "IG REELS拍攝店家",
-        "ig_url": "",
+        "ig_url": "https://www.instagram.com/favorland_2002/",
         "map_url": "https://www.google.com.tw/maps/place/%E9%87%80%E5%B3%B6+%EF%BD%9C+Favorland+%E8%99%8E%E5%B0%BE%E9%87%80%E9%85%92%E5%BB%A0/@23.6810346,120.4072354,912m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346eba46b84fb277:0x6bdf913583229645!8m2!3d23.6810297!4d120.4098157!16s%2Fg%2F11dym7b8xg?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
         "lat": 23.6810297,
         "lon": 120.4098157
