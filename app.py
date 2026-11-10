@@ -101,7 +101,7 @@ if selected_tiers:
     filtered_stores = [s for s in filtered_stores if s.get("tier") in selected_tiers]
 
 # --- 主畫面佈局 ---
-st.title("🍲 雲林美食與空間地圖")
+st.title("Wen's life 雲林美食地圖 ")
 st.markdown(f"目前為您篩選出 **{len(filtered_stores)}** 間精選店家：")
 
 if not filtered_stores:
