@@ -60,12 +60,128 @@
             "約會",
             "放鬆",
             "拍照打卡",
-            "出去玩"
+            "出去玩",
+            "頂級味蕾饗宴"
         ],
         "tier": "IG REELS拍攝店家",
         "ig_url": "https://www.instagram.com/favorland_2002/",
         "map_url": "https://www.google.com.tw/maps/place/%E9%87%80%E5%B3%B6+%EF%BD%9C+Favorland+%E8%99%8E%E5%B0%BE%E9%87%80%E9%85%92%E5%BB%A0/@23.6810346,120.4072354,912m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346eba46b84fb277:0x6bdf913583229645!8m2!3d23.6810297!4d120.4098157!16s%2Fg%2F11dym7b8xg?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
         "lat": 23.6810297,
         "lon": 120.4098157
+    },
+    {
+        "name": "迴香人",
+        "subtitle": "印度系咖哩與蔬食質感餐廳",
+        "description": "以蔬食為主軸的美味的創意料理餐廳\n結合印度料理與創意 並用大量香料夠見餐點味道\n是聚餐約會非常推薦的斗六餐廳!\n",
+        "price_range": "250-400",
+        "district": "斗六",
+        "category": [
+            "正餐",
+            "中式料理",
+            "西式料理"
+        ],
+        "types": [
+            "約會",
+            "獨處",
+            "頂級味蕾饗宴",
+            "聚餐"
+        ],
+        "tier": "IG REELS拍攝店家",
+        "ig_url": "https://www.instagram.com/saanvi__curry/reels/",
+        "map_url": "https://www.google.com.tw/maps/place/%E8%BF%B4%E9%A6%99%E4%BA%BAx%E9%A6%99%E6%96%99%E5%92%96%E5%93%A9%E9%87%8E%E8%8F%9C%E5%B1%8B/@23.7155125,120.5407251,912m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346ec9667df37ccf:0x6fbeda70316278ba!8m2!3d23.7155076!4d120.5433054!16s%2Fg%2F11z90s4l2s?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.7155076,
+        "lon": 120.5433054
+    },
+    {
+        "name": "Knight‘s Bar (K-BAR)",
+        "subtitle": "斗六夜景酒吧",
+        "description": "位於斗六緻麗伯爵酒店頂樓\n13樓的開放是酒吧,能將斗六的城市燈火夜景盡收眼底\n在這裡吹風 微醺 談心 欣賞美景就是最棒的享受",
+        "price_range": "200-500",
+        "district": "斗六",
+        "category": [
+            "喝酒"
+        ],
+        "types": [
+            "放鬆",
+            "獨處",
+            "約會",
+            "拍照打卡"
+        ],
+        "tier": "IG REELS拍攝店家",
+        "ig_url": "https://www.instagram.com/knights_bar/",
+        "map_url": "https://www.google.com.tw/maps/place/Knight's+Bar+(K-BAR)/@23.7107958,120.5411676,912m/data=!3m3!1e3!4b1!5s0x346ec83a60922471:0x58b64a2996cb065!4m6!3m5!1s0x346ec91cff1e2575:0x6d3d19750fe2bc85!8m2!3d23.7107932!4d120.5425417!16s%2Fg%2F11sqpdj7bw?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.7107932,
+        "lon": 120.5425417
+    },
+    {
+        "name": "來禾烤茶",
+        "subtitle": "圍爐煮茶 夜景咖啡廳",
+        "description": "位於古坑夜景咖啡一帶 夜景視野相當好\n微涼夜晚 與家人朋友在此看著山下夜景 配上暖呼呼的烤茶\n圍爐的氛圍 能讓彼此更靠近",
+        "price_range": "400-800",
+        "district": "古坑",
+        "category": [
+            "咖啡廳",
+            "飲料",
+            "遊樂"
+        ],
+        "types": [
+            "拍照打卡",
+            "約會",
+            "放鬆",
+            "出去玩"
+        ],
+        "tier": "IG REELS拍攝店家",
+        "ig_url": "https://www.instagram.com/laihe.kaocha/",
+        "map_url": "https://www.google.com.tw/maps/place/%E4%BE%86%E7%A6%BE%E7%83%A4%E8%8C%B6+%E5%9C%8D%E7%88%90%E7%85%AE%E8%8C%B6+%E5%A4%9C%E6%99%AF%E5%92%96%E5%95%A1%E5%BB%B3/@23.5951304,120.5782158,913m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346ec7e779aa5a23:0xad8da758e26c7a71!8m2!3d23.5951255!4d120.5807961!16s%2Fg%2F11zb3rypg8?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.5951255,
+        "lon": 120.5807961
+    },
+    {
+        "name": "土庫驛 可可莊園",
+        "subtitle": "充滿現代感的聚落式莊園",
+        "description": "這裡有群人正用他們的才華 自己種植可可樹\n並將其變成如黑色寶石般的精緻巧克力\n在這裡可以盡情享受陽光與庭園空間 同時品嚐美味的義式冰淇淋與手工巧克力",
+        "price_range": "0-500",
+        "district": "土庫",
+        "category": [
+            "點心",
+            "甜點",
+            "遊樂"
+        ],
+        "types": [
+            "約會",
+            "放鬆",
+            "拍照打卡",
+            "質感空間",
+            "出去玩",
+            "頂級味蕾饗宴"
+        ],
+        "tier": "IG REELS拍攝店家",
+        "ig_url": "https://www.instagram.com/tukuyi_cocoa/",
+        "map_url": "https://www.google.com.tw/maps/place/%E5%9C%9F%E5%BA%AB%E9%A9%9B%E5%8F%AF%E5%8F%AF%E8%8E%8A%E5%9C%92/@23.675169,120.3960671,912m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346ebb691b6750bb:0xeb67a3bfec6eb85f!8m2!3d23.6751641!4d120.3986474!16s%2Fg%2F11j4ly02d9?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.6751641,
+        "lon": 120.3986474
+    },
+    {
+        "name": "松屋",
+        "subtitle": "雲林的高分日式料理店",
+        "description": "斗六相當名氣的日料店\n提供高檔的日式料理餐點與無菜單料理\n並由曾在米其林三星餐廳學義的師傅親自操刀料理",
+        "price_range": "350-1600",
+        "district": "斗六",
+        "category": [
+            "正餐",
+            "東方料理(中 日 韓  東南亞 中東)"
+        ],
+        "types": [
+            "約會",
+            "聚餐",
+            "慶生",
+            "獨處",
+            "頂級味蕾饗宴"
+        ],
+        "tier": "IG REELS拍攝店家",
+        "ig_url": "https://www.instagram.com/song.wu.1980/",
+        "map_url": "https://www.google.com.tw/maps/place/%E6%9D%BE%E5%B1%8B%E6%B4%8B%E9%A2%A8%E5%92%8C%E9%A3%9F%E9%A4%A8/@23.7107274,120.5418634,912m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346ec83a10b2956d:0xb11995106d8dd040!8m2!3d23.7107225!4d120.5444437!16s%2Fg%2F1td1b4_g?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.7107225,
+        "lon": 120.5444437
     }
 ]
