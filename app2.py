@@ -5,6 +5,7 @@ import os
 import re
 import requests
 import time
+import urllib.parse
 from supabase import create_client, Client
 
 st.set_page_config(page_title="雲林美食後台管理系統", page_icon="🛠️", layout="wide")
@@ -18,7 +19,7 @@ def init_supabase():
 
 supabase = init_supabase()
 
-# --- 載入與儲存標籤（tags.json 維持本地或可依需求調整） ---
+# --- 載入與儲存標籤 ---
 TAGS_FILE = "tags.json"
 
 def load_json(file_path, default_value):
@@ -50,16 +51,17 @@ def extract_lat_lon_from_url(url):
     if not url:
         return None, None
     try:
-        if "goo.gl" in url or "maps.app.goo.gl" in url:
+        clean_url = urllib.parse.unquote(url)
+        if "goo.gl" in clean_url or "maps.app.goo.gl" in clean_url:
             headers = {"User-Agent": "Mozilla/5.0"}
-            response = requests.get(url, headers=headers, allow_redirects=True, timeout=5)
-            url = response.url
+            response = requests.get(clean_url, headers=headers, allow_redirects=True, timeout=5)
+            clean_url = response.url
 
-        match_3d4d = re.search(r'!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)', url)
+        match_3d4d = re.search(r'!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)', clean_url)
         if match_3d4d:
             return float(match_3d4d.group(1)), float(match_3d4d.group(2))
             
-        match_at = re.search(r'@(-?\d+\.\d+),(-?\d+\.\d+)', url)
+        match_at = re.search(r'@(-?\d+\.\d+),(-?\d+\.\d+)', clean_url)
         if match_at:
             return float(match_at.group(1)), float(match_at.group(2))
             
@@ -163,22 +165,21 @@ with tab1:
                     st.error("❌ 建立失敗：無法從 Google Maps 網址中解析出精準座標！")
                 else:
                     new_store = {
-                        "name": name,
-                        "subtitle": subtitle,
-                        "description": description,
-                        "price_range": price_range,
-                        "district": district,
+                        "name": str(name).strip(),
+                        "subtitle": str(subtitle).strip(),
+                        "description": str(description).strip() if description else "",
+                        "price_range": str(price_range).strip() if price_range else "",
+                        "district": str(district).strip(),
                         "category": category,
                         "types": store_types,
-                        "tier": tier,
-                        "ig_url": ig_url,
-                        "map_url": map_url,
+                        "tier": str(tier).strip(),
+                        "ig_url": str(ig_url).strip() if ig_url else "",
+                        "map_url": str(map_url).strip(),
                         "lat": float(f_lat),
                         "lon": float(f_lon)
                     }
                     
                     try:
-                        # 寫入 Supabase
                         supabase.table("stores").insert(new_store).execute()
                         st.success(f"🎉 建立成功！已成功新增店家：{name}")
                         st.balloons()
@@ -248,22 +249,21 @@ with tab2:
                         new_lat, new_lon = f_lat, f_lon
 
                 updated_store_dict = {
-                    "name": e_name,
-                    "subtitle": e_subtitle,
-                    "description": e_description,
-                    "price_range": e_price_range,
-                    "district": e_district,
+                    "name": str(e_name).strip(),
+                    "subtitle": str(e_subtitle).strip(),
+                    "description": str(e_description).strip() if e_description else "",
+                    "price_range": str(e_price_range).strip() if e_price_range else "",
+                    "district": str(e_district).strip(),
                     "category": e_category,
                     "types": e_types,
-                    "tier": e_tier,
-                    "ig_url": e_ig_url,
-                    "map_url": e_map_url,
+                    "tier": str(e_tier).strip(),
+                    "ig_url": str(e_ig_url).strip() if e_ig_url else "",
+                    "map_url": str(e_map_url).strip(),
                     "lat": float(new_lat),
                     "lon": float(new_lon)
                 }
                 
                 try:
-                    # 依據原本的 name 當作條件更新 Supabase 資料
                     supabase.table("stores").update(updated_store_dict).eq("name", selected_store_name).execute()
                     st.success(f"✅ 店家「{e_name}」更新成功！")
                     time.sleep(1.2)
@@ -271,7 +271,6 @@ with tab2:
                 except Exception as e:
                     st.error(f"❌ 更新失敗: {e}")
                     
-            # --- 安全確認刪除彈出視窗 (st.dialog) ---
             @st.dialog("⚠️ 確認刪除")
             def confirm_delete_dialog(s_name):
                 st.markdown(f"你確定要永久刪除雲端資料庫中的店家 **「{s_name}」** 嗎？此動作無法復原。")
