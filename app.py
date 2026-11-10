@@ -178,12 +178,13 @@ else:
             types = ", ".join(store.get("types", [])) if store.get("types") else "無"
             price = store.get("price_range", "未標註")
             
+            # 🎯 依據推薦等級動態對應標籤文字顏色與框線顏色
             if "IG REELS" in tier:
-                dot_color = "#b62524"
+                tag_color = "#b62524"
             elif "LINE社群" in tier:
-                dot_color = "#b97926"
+                tag_color = "#b97926"
             else:
-                dot_color = "#cca59b"
+                tag_color = "#803c34"
 
             html_label = f"""
             <div style="
@@ -196,11 +197,11 @@ else:
             ">
                 <div style="
                     background-color: #decfbd;
-                    color: #803c34;
+                    color: {tag_color};
                     font-weight: bold;
                     font-size: 12px;
                     padding: 4px 10px;
-                    border: 1px solid #803c34;
+                    border: 1.5px solid {tag_color};
                     border-radius: 12px;
                     white-space: nowrap;
                     box-shadow: 0 3px 8px rgba(0,0,0,0.15);
@@ -211,7 +212,7 @@ else:
                 <div style="
                     width: 14px;
                     height: 14px;
-                    background-color: {dot_color};
+                    background-color: {tag_color};
                     border: 2px solid #ffffff;
                     border-radius: 50%;
                     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
