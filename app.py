@@ -6,7 +6,7 @@ import folium
 from streamlit_folium import st_folium
 
 # 設定頁面佈局為寬螢幕
-st.set_page_config(page_title="雲林美食地圖 | Monlu Studio", page_icon="🍲", layout="wide")
+st.set_page_config(page_title="雲林美食地圖 | Monlu Studio", page_icon="☁️", layout="wide")
 
 # --- CSS 注入：自訂背景色、字體顏色與全域樣式 ---
 st.markdown(
@@ -101,7 +101,7 @@ if selected_tiers:
     filtered_stores = [s for s in filtered_stores if s.get("tier") in selected_tiers]
 
 # --- 主畫面佈局 ---
-st.title("🍲 雲林美食與空間地圖")
+st.title("Wen's life 雲林美食地圖")
 st.markdown(f"目前為您篩選出 **{len(filtered_stores)}** 間精選店家：")
 
 if not filtered_stores:
