@@ -98,7 +98,7 @@ if "不指定" not in selected_types and len(selected_types) > 0:
     ]
 
 if selected_tiers:
-    filtered_stores = [s for s in filtered_stores if s.get("tier"] in selected_tiers]
+    filtered_stores = [s for s in filtered_stores if s.get("tier") in selected_tiers]
 
 # --- 主畫面佈局 ---
 st.title("Wen's life 雲林推薦美食地圖")
@@ -203,7 +203,6 @@ else:
         for store in filtered_stores:
             tier = store.get("tier", "")
             
-            # 統一使用指定的背景色 #f7dad2，邊框依據等級或維持一致的精緻邊框
             if "IG REELS" in tier:
                 card_border = "#b62524"
             elif "LINE社群" in tier:
@@ -214,7 +213,7 @@ else:
             name = store.get('name', '')
             subtitle = store.get('subtitle', '')
             
-            # 店名與副標（帶有垂直線分隔，副標顏色稍淺）
+            # 店名與副標（垂直線分隔）
             header_html = f"""
             <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px;">
                 <h3 style="margin: 0; font-size: 18px; color: #803c34;">{name}</h3>
@@ -234,7 +233,7 @@ else:
                 {header_html}
             """
             
-            # 店家詳細介紹文字（放在標籤上方、店名下方，深灰色文字）
+            # 介紹文字（放標籤上方、店名下方）
             if store.get("description"):
                 card_html += f"<p style='margin: 0 0 10px 0; font-size: 13px; color: #4a403f !important; line-height: 1.4;'>{store.get('description')}</p>"
             
@@ -262,5 +261,7 @@ else:
             btn_html += "</div>"
             
             card_html += btn_html + "</div>"
+            
+            st.markdown(card_html, unsafe_allow_html=True)
             
             st.markdown(card_html, unsafe_allow_html=True)
