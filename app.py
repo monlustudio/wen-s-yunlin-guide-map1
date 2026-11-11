@@ -121,7 +121,7 @@ default_tags = {
 tags_data = load_json(TAGS_FILE, default_tags)
 
 # ==========================================
-# 🎲 隨機抽卡對話框設計（內含老虎機轉動特效）
+# 🎲 隨機抽卡對話框設計（內含吃角子老虎機緩速漸停特效）
 # ==========================================
 @st.dialog("🎲 今天去哪兒？私藏行程盲盒")
 def random_draw_dialog(stores, tags):
@@ -159,11 +159,14 @@ def random_draw_dialog(stores, tags):
         if not pool:
             st.warning("⚠️ 找不到符合條件的店家耶！放寬條件再抽一次看看吧～")
         else:
-            # 🎰 模擬老虎機轉動特效 (Slot Machine Effect)
+            # 🎰 模擬吃角子老虎機特效：前快後慢（漸歇減速機制）
             slot_placeholder = st.empty()
             all_names = [s.get("name") for s in stores]
             
-            for _ in range(12):
+            # 設定遞增延遲時間清單（愈後面間隔愈大，營造煞車緩速感）
+            delays = [0.03, 0.04, 0.05, 0.07, 0.10, 0.14, 0.19, 0.25, 0.32, 0.40]
+            
+            for d in delays:
                 temp_name = random.choice(all_names)
                 slot_placeholder.markdown(
                     f"""
@@ -175,13 +178,13 @@ def random_draw_dialog(stores, tags):
                         padding: 16px;
                         margin: 10px 0;
                     ">
-                        <h2 style="margin: 0; color: #803c34; font-size: 22px;">🎰 正在盲盒抽籤中...</h2>
+                        <h2 style="margin: 0; color: #803c34; font-size: 22px;">🎰 拉霸抽籤中...</h2>
                         <p style="margin: 8px 0 0 0; font-size: 20px; font-weight: bold; color: #b62524;">✨ {temp_name} ✨</p>
                     </div>
                     """,
                     unsafe_allow_html=True
                 )
-                time.sleep(0.08)
+                time.sleep(d)
             
             slot_placeholder.empty()
             
@@ -236,18 +239,12 @@ def random_draw_dialog(stores, tags):
             st.markdown(card_box + btn_h, unsafe_allow_html=True)
 
 
-# --- 側邊欄：進階篩選器與抽卡按鈕 ---
+# --- 側邊欄：進階篩選器 ---
 st.sidebar.header("🔍 雲林美食探索")
 st.sidebar.markdown("尋找在地私藏好味道與拍攝空間。")
 
 district_options = ["全雲林"] + tags_data.get("district", ["虎尾", "斗六"])
 selected_district = st.sidebar.selectbox("📍 選擇地區", district_options)
-
-# 🎲 將「今天去哪兒」抽卡按鈕放置於「選擇地區」下方
-st.markdown("")
-if st.sidebar.button("🎲 今天去哪兒？ (隨機抽卡)", use_container_width=True):
-    random_draw_dialog(stores_data, tags_data)
-st.sidebar.markdown("---")
 
 category_options = ["不指定"] + tags_data.get("category", ["正餐", "小吃", "甜點", "咖啡", "飲品"])
 selected_category = st.sidebar.selectbox("🍽️ 料理類別", category_options)
@@ -257,6 +254,11 @@ selected_types = st.sidebar.multiselect("🏷️ 空間/氛圍類型 (可複選)
 
 tier_options = tags_data.get("tier", ["IG REELS拍攝店家", "LINE社群 上榜名單", "WEN日常美食推薦"])
 selected_tiers = st.sidebar.multiselect("⭐ 推薦等級 (可複選)", tier_options, default=tier_options)
+
+# 🎲 將「今天去哪兒」抽卡按鈕放置於側邊欄的最下方
+st.sidebar.markdown("---")
+if st.sidebar.button("今天去哪兒？", use_container_width=True):
+    random_draw_dialog(stores_data, tags_data)
 
 # --- 過濾資料邏輯 ---
 filtered_stores = stores_data
