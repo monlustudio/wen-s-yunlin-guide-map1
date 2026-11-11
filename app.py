@@ -133,11 +133,11 @@ def random_draw_dialog(stores, tags):
     
     # 2. 選擇空間/氛圍類型
     type_options = ["不限"] + tags.get("type", ["聚餐", "約會", "放鬆"])
-    draw_type = st.selectbox("🏷️ 選擇空間或氛圍類型", type_options, key="draw_type")
+    draw_type = st.selectbox("🏷️ 選擇形成類型", type_options, key="draw_type")
     
     # 3. 選擇價位範圍
     price_options = ["不限", "$ 經濟平價 (200元以下)", "$$ 中等消費 (200~500元)", "$$$ 精緻質感 (500元以上)"]
-    draw_price = st.selectbox("💰 選擇消費均消偏好", price_options, key="draw_price")
+    draw_price = st.selectbox("💰 選擇消費金額偏好", price_options, key="draw_price")
     
     st.markdown("---")
     
