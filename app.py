@@ -145,7 +145,7 @@ def random_draw_dialog(stores, tags):
         # 篩選符合條件的店家池
         pool = stores
         if draw_district != "全雲林":
-            pool = [s for s in pool if s.get("district"] == draw_district]
+            pool = [s for s in pool if s.get("district") == draw_district]
             
         if draw_type != "不限":
             pool = [s for s in pool if draw_type in s.get("types", [])]
@@ -163,7 +163,6 @@ def random_draw_dialog(stores, tags):
             slot_placeholder = st.empty()
             all_names = [s.get("name") for s in stores]
             
-            # 快速閃過隨機店名 12 次，製造轉動感
             for _ in range(12):
                 temp_name = random.choice(all_names)
                 slot_placeholder.markdown(
@@ -184,13 +183,12 @@ def random_draw_dialog(stores, tags):
                 )
                 time.sleep(0.08)
             
-            slot_placeholder.empty() # 清除轉動畫面
+            slot_placeholder.empty()
             
             # 隨機抽出一張最終店家
             chosen = random.choice(pool)
             st.success(f"🎉 抽中啦！為您推薦：**{chosen.get('name')}**")
             
-            # 顯示抽中店家的精美卡片
             tier = chosen.get("tier", "")
             if "IG REELS" in tier:
                 c_bg, c_border = "rgba(182, 37, 36, 0.22)", "#b62524"
@@ -245,7 +243,7 @@ st.sidebar.markdown("尋找在地私藏好味道與拍攝空間。")
 district_options = ["全雲林"] + tags_data.get("district", ["虎尾", "斗六"])
 selected_district = st.sidebar.selectbox("📍 選擇地區", district_options)
 
-# 🎲 將「今天去哪兒」抽卡按鈕放置於「選擇地區」下方，且按鈕改為淡金色
+# 🎲 將「今天去哪兒」抽卡按鈕放置於「選擇地區」下方
 st.markdown("")
 if st.sidebar.button("🎲 今天去哪兒？ (隨機抽卡)", use_container_width=True):
     random_draw_dialog(stores_data, tags_data)
