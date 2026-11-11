@@ -125,7 +125,7 @@ tags_data = load_json(TAGS_FILE, default_tags)
 # ==========================================
 @st.dialog("今天去哪兒？私藏行程盲盒")
 def random_draw_dialog(stores, tags):
-    st.markdown("不知道今天該去哪裡嗎？讓抽卡幫你決定吧！")
+    st.markdown("不知道今天該去哪裡或吃什麼嗎？讓抽卡幫你決定吧！")
     
     # 1. 選擇地區
     dist_options = ["全雲林"] + tags.get("district", ["虎尾", "斗六"])
@@ -263,7 +263,7 @@ selected_tiers = st.sidebar.multiselect("⭐ 推薦等級 (可複選)", tier_opt
 
 # 🎲 將提示文字與「今天去哪兒」抽卡按鈕放置於側邊欄的最下方
 st.sidebar.markdown("---")
-st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px;'>不知道今天要去哪嗎？按這裡幫你決定吧</p>", unsafe_allow_html=True)
+st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px;'>不知道今天要吃什麼或去哪裡嗎？按這裡幫你決定吧</p>", unsafe_allow_html=True)
 if st.sidebar.button("今天去哪兒？", use_container_width=True):
     random_draw_dialog(stores_data, tags_data)
 
