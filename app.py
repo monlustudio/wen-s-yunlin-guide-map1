@@ -141,7 +141,7 @@ def random_draw_dialog(stores, tags):
     
     st.markdown("---")
     
-    if st.button("🚀 開始抽卡！幫我決定", type="primary", use_container_width=True):
+    if st.button("幫我決定今天要去哪！", type="primary", use_container_width=True):
         # 篩選符合條件的店家池
         pool = stores
         if draw_district != "全雲林":
@@ -186,7 +186,7 @@ def random_draw_dialog(stores, tags):
                         padding: 16px;
                         margin: 10px 0;
                     ">
-                        <h2 style="margin: 0; color: #803c34; font-size: 22px;">🎰 拉霸抽籤中...</h2>
+                        <h2 style="margin: 0; color: #803c34; font-size: 22px;">抽籤中...</h2>
                         <p style="margin: 8px 0 0 0; font-size: 20px; font-weight: bold; color: #b62524;">✨ {temp_name} ✨</p>
                     </div>
                     """,
@@ -196,7 +196,7 @@ def random_draw_dialog(stores, tags):
             
             slot_placeholder.empty()
             
-            st.success(f"🎉 抽中啦！為您推薦：**{chosen.get('name')}**")
+            st.success(f"今天就去這吧！為您推薦：**{chosen.get('name')}**")
             
             tier = chosen.get("tier", "")
             if "IG REELS" in tier:
@@ -247,7 +247,7 @@ def random_draw_dialog(stores, tags):
 
 # --- 側邊欄：進階篩選器 ---
 st.sidebar.header("🔍 雲林美食探索")
-st.sidebar.markdown("尋找在地私藏好味道與拍攝空間。")
+st.sidebar.markdown("尋找在地私藏好味道與質感空間。")
 
 district_options = ["全雲林"] + tags_data.get("district", ["虎尾", "斗六"])
 selected_district = st.sidebar.selectbox("📍 選擇地區", district_options)
@@ -263,7 +263,7 @@ selected_tiers = st.sidebar.multiselect("⭐ 推薦等級 (可複選)", tier_opt
 
 # 🎲 將「今天去哪兒」抽卡按鈕放置於側邊欄的最下方
 st.sidebar.markdown("---")
-if st.sidebar.button("🎲 今天去哪兒？ (隨機抽卡)", use_container_width=True):
+if st.sidebar.button("今天去哪兒？", use_container_width=True):
     random_draw_dialog(stores_data, tags_data)
 
 # --- 過濾資料邏輯 ---
