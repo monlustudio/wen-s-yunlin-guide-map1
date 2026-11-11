@@ -3,6 +3,7 @@ import pandas as pd
 import json
 import os
 import random
+import time
 import folium
 from streamlit_folium import st_folium
 
@@ -35,6 +36,20 @@ st.markdown(
     }}
     [data-testid="stSidebar"] span[data-baseweb="tag"] span {{
         color: #803c34 !important;
+    }}
+
+    /* 🎲 自訂淡金色抽卡按鈕樣式 */
+    div.stButton > button[kind="secondary"], div.stButton > button {{
+        background-color: #decfbd !important;
+        color: #803c34 !important;
+        border: 1.5px solid #803c34 !important;
+        font-weight: bold !important;
+        border-radius: 8px !important;
+    }}
+    div.stButton > button:hover {{
+        background-color: #d2c0ab !important;
+        color: #803c34 !important;
+        border-color: #803c34 !important;
     }}
 
     /* 📱 手機版主標題優化：字體放大，確保單行顯示不換行 */
@@ -106,7 +121,7 @@ default_tags = {
 tags_data = load_json(TAGS_FILE, default_tags)
 
 # ==========================================
-# 🎲 隨機抽卡對話框設計
+# 🎲 隨機抽卡對話框設計（內含老虎機轉動特效）
 # ==========================================
 @st.dialog("🎲 今天去哪兒？私藏行程盲盒")
 def random_draw_dialog(stores, tags):
@@ -130,13 +145,12 @@ def random_draw_dialog(stores, tags):
         # 篩選符合條件的店家池
         pool = stores
         if draw_district != "全雲林":
-            pool = [s for s in pool if s.get("district") == draw_district]
+            pool = [s for s in pool if s.get("district"] == draw_district]
             
         if draw_type != "不限":
             pool = [s for s in pool if draw_type in s.get("types", [])]
             
         if draw_price != "不限":
-            # 簡單關鍵字過濾
             if "經濟平價" in draw_price:
                 pool = [s for s in pool if any(c in s.get("price_range", "") for c in ["1", "2", "百", "平", "50", "70", "100"])]
             elif "精緻質感" in draw_price:
@@ -145,7 +159,34 @@ def random_draw_dialog(stores, tags):
         if not pool:
             st.warning("⚠️ 找不到符合條件的店家耶！放寬條件再抽一次看看吧～")
         else:
-            # 隨機抽出一張
+            # 🎰 模擬老虎機轉動特效 (Slot Machine Effect)
+            slot_placeholder = st.empty()
+            all_names = [s.get("name") for s in stores]
+            
+            # 快速閃過隨機店名 12 次，製造轉動感
+            for _ in range(12):
+                temp_name = random.choice(all_names)
+                slot_placeholder.markdown(
+                    f"""
+                    <div style="
+                        text-align: center;
+                        background-color: #decfbd;
+                        border: 2px dashed #803c34;
+                        border-radius: 12px;
+                        padding: 16px;
+                        margin: 10px 0;
+                    ">
+                        <h2 style="margin: 0; color: #803c34; font-size: 22px;">🎰 正在盲盒抽籤中...</h2>
+                        <p style="margin: 8px 0 0 0; font-size: 20px; font-weight: bold; color: #b62524;">✨ {temp_name} ✨</p>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+                time.sleep(0.08)
+            
+            slot_placeholder.empty() # 清除轉動畫面
+            
+            # 隨機抽出一張最終店家
             chosen = random.choice(pool)
             st.success(f"🎉 抽中啦！為您推薦：**{chosen.get('name')}**")
             
@@ -201,15 +242,14 @@ def random_draw_dialog(stores, tags):
 st.sidebar.header("🔍 雲林美食探索")
 st.sidebar.markdown("尋找在地私藏好味道與拍攝空間。")
 
-# 🎲 在側邊欄加入「今天去哪兒」抽卡按鈕
-st.sidebar.markdown("---")
-st.sidebar.subheader("🎲 選擇障礙救星")
-if st.sidebar.button("🎲 今天去哪兒？(隨機抽卡)", use_container_width=True, type="primary"):
-    random_draw_dialog(stores_data, tags_data)
-st.sidebar.markdown("---")
-
 district_options = ["全雲林"] + tags_data.get("district", ["虎尾", "斗六"])
 selected_district = st.sidebar.selectbox("📍 選擇地區", district_options)
+
+# 🎲 將「今天去哪兒」抽卡按鈕放置於「選擇地區」下方，且按鈕改為淡金色
+st.markdown("")
+if st.sidebar.button("🎲 今天去哪兒？ (隨機抽卡)", use_container_width=True):
+    random_draw_dialog(stores_data, tags_data)
+st.sidebar.markdown("---")
 
 category_options = ["不指定"] + tags_data.get("category", ["正餐", "小吃", "甜點", "咖啡", "飲品"])
 selected_category = st.sidebar.selectbox("🍽️ 料理類別", category_options)
@@ -357,7 +397,6 @@ else:
             store_sub = store.get('subtitle', '')
             title_display = f"{store_name} <span style='font-size: 14.5px; font-weight: normal; color: #803c34;'>| {store_sub}</span>" if store_sub else store_name
 
-            # 圓角改大為 14px
             card_html = f"""
             <div style="
                 background-color: {card_bg};
