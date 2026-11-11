@@ -123,9 +123,9 @@ tags_data = load_json(TAGS_FILE, default_tags)
 # ==========================================
 # 🎲 隨機抽卡對話框設計（吃角子老虎機緩速漸停，且最後顯示即為中獎結果）
 # ==========================================
-@st.dialog("🎲 今天去哪兒？私藏行程盲盒")
+@st.dialog("今天去哪兒？私藏行程盲盒")
 def random_draw_dialog(stores, tags):
-    st.markdown("不知道今天該去哪裡嗎？讓隨機抽卡幫你決定靈感！")
+    st.markdown("不知道今天該去哪裡嗎？讓抽卡幫你決定吧！")
     
     # 1. 選擇地區
     dist_options = ["全雲林"] + tags.get("district", ["虎尾", "斗六"])
