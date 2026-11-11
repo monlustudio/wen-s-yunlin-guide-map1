@@ -121,7 +121,7 @@ default_tags = {
 tags_data = load_json(TAGS_FILE, default_tags)
 
 # ==========================================
-# 🎲 隨機抽卡對話框設計（內含吃角子老虎機緩速漸停特效）
+# 🎲 隨機抽卡對話框設計（吃角子老虎機緩速漸停，且最後顯示即為中獎結果）
 # ==========================================
 @st.dialog("🎲 今天去哪兒？私藏行程盲盒")
 def random_draw_dialog(stores, tags):
@@ -159,15 +159,23 @@ def random_draw_dialog(stores, tags):
         if not pool:
             st.warning("⚠️ 找不到符合條件的店家耶！放寬條件再抽一次看看吧～")
         else:
+            # 🎯 先決定好最終要中獎的那一家店
+            chosen = random.choice(pool)
+            
             # 🎰 模擬吃角子老虎機特效：前快後慢（漸歇減速機制）
             slot_placeholder = st.empty()
-            all_names = [s.get("name") for s in stores]
+            all_names = [s.get("name") for s in pool]
             
             # 設定遞增延遲時間清單（愈後面間隔愈大，營造煞車緩速感）
             delays = [0.03, 0.04, 0.05, 0.07, 0.10, 0.14, 0.19, 0.25, 0.32, 0.40]
             
-            for d in delays:
-                temp_name = random.choice(all_names)
+            for i, d in enumerate(delays):
+                # 如果是最後一次循環，強制顯示中獎的那一家店作為完美的停格點！
+                if i == len(delays) - 1:
+                    temp_name = chosen.get("name")
+                else:
+                    temp_name = random.choice(all_names)
+                    
                 slot_placeholder.markdown(
                     f"""
                     <div style="
@@ -188,8 +196,6 @@ def random_draw_dialog(stores, tags):
             
             slot_placeholder.empty()
             
-            # 隨機抽出一張最終店家
-            chosen = random.choice(pool)
             st.success(f"🎉 抽中啦！為您推薦：**{chosen.get('name')}**")
             
             tier = chosen.get("tier", "")
@@ -257,7 +263,7 @@ selected_tiers = st.sidebar.multiselect("⭐ 推薦等級 (可複選)", tier_opt
 
 # 🎲 將「今天去哪兒」抽卡按鈕放置於側邊欄的最下方
 st.sidebar.markdown("---")
-if st.sidebar.button("今天去哪兒？", use_container_width=True):
+if st.sidebar.button("🎲 今天去哪兒？ (隨機抽卡)", use_container_width=True):
     random_draw_dialog(stores_data, tags_data)
 
 # --- 過濾資料邏輯 ---
