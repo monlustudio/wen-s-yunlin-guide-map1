@@ -133,7 +133,7 @@ def random_draw_dialog(stores, tags):
     
     # 2. 選擇空間/氛圍類型
     type_options = ["不限"] + tags.get("type", ["聚餐", "約會", "放鬆"])
-    draw_type = st.selectbox("🏷️ 選擇形成類型", type_options, key="draw_type")
+    draw_type = st.selectbox("🏷️ 選擇行程類型", type_options, key="draw_type")
     
     # 3. 選擇價位範圍
     price_options = ["不限", "$ 經濟平價 (200元以下)", "$$ 中等消費 (200~500元)", "$$$ 精緻質感 (500元以上)"]
@@ -261,8 +261,9 @@ selected_types = st.sidebar.multiselect("🏷️ 空間/氛圍類型 (可複選)
 tier_options = tags_data.get("tier", ["IG REELS拍攝店家", "LINE社群 上榜名單", "WEN日常美食推薦"])
 selected_tiers = st.sidebar.multiselect("⭐ 推薦等級 (可複選)", tier_options, default=tier_options)
 
-# 🎲 將「今天去哪兒」抽卡按鈕放置於側邊欄的最下方
+# 🎲 將提示文字與「今天去哪兒」抽卡按鈕放置於側邊欄的最下方
 st.sidebar.markdown("---")
+st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px;'>不知道今天要去哪嗎？按這裡幫你決定吧</p>", unsafe_allow_html=True)
 if st.sidebar.button("今天去哪兒？", use_container_width=True):
     random_draw_dialog(stores_data, tags_data)
 
