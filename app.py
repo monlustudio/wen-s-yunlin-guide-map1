@@ -2,13 +2,14 @@ import streamlit as st
 import pandas as pd
 import json
 import os
+import random
 import folium
 from streamlit_folium import st_folium
 
 # 設定頁面佈局為寬螢幕
 st.set_page_config(page_title="雲林美食地圖 | Monlu Studio", page_icon="☁️", layout="wide")
 
-# --- CSS 注入：自訂背景色、字體顏色、手機版主標題微調、頂部切齊與副標樣式 ---
+# --- CSS 注入：自訂背景色、字體顏色、手機版主標題微調、頂部切齊與加大圓角卡片 ---
 st.markdown(
     f"""
     <style>
@@ -36,7 +37,7 @@ st.markdown(
         color: #803c34 !important;
     }}
 
-    /* 📱 手機版主標題優化：字體再放大一些，確保單行顯示不換行 */
+    /* 📱 手機版主標題優化：字體放大，確保單行顯示不換行 */
     h1 {{
         font-size: 7.5vw !important;
         white-space: nowrap !important;
@@ -55,7 +56,6 @@ st.markdown(
         div.block-container {{
             padding-top: 2rem;
         }}
-        /* 針對右側欄容器向上微調，消除標題與地圖上方的落差 */
         div[data-testid="column"]:nth-of-type(2) {{
             margin-top: -38px;
         }}
@@ -85,7 +85,6 @@ def load_json(file_path, default_value):
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
-            # 如果是店家資料，自動依據店名 (name) 過濾重複項，保留最後一筆
             if file_path == DATA_FILE and isinstance(data, list):
                 unique_stores = {}
                 for store in data:
@@ -106,9 +105,108 @@ default_tags = {
 }
 tags_data = load_json(TAGS_FILE, default_tags)
 
-# --- 側邊欄：進階篩選器 ---
+# ==========================================
+# 🎲 隨機抽卡對話框設計
+# ==========================================
+@st.dialog("🎲 今天去哪兒？私藏行程盲盒")
+def random_draw_dialog(stores, tags):
+    st.markdown("不知道今天該去哪裡嗎？讓隨機抽卡幫你決定靈感！")
+    
+    # 1. 選擇地區
+    dist_options = ["全雲林"] + tags.get("district", ["虎尾", "斗六"])
+    draw_district = st.selectbox("📍 選擇想去的地區", dist_options, key="draw_dist")
+    
+    # 2. 選擇空間/氛圍類型
+    type_options = ["不限"] + tags.get("type", ["聚餐", "約會", "放鬆"])
+    draw_type = st.selectbox("🏷️ 選擇空間或氛圍類型", type_options, key="draw_type")
+    
+    # 3. 選擇價位範圍
+    price_options = ["不限", "$ 經濟平價 (200元以下)", "$$ 中等消費 (200~500元)", "$$$ 精緻質感 (500元以上)"]
+    draw_price = st.selectbox("💰 選擇消費均消偏好", price_options, key="draw_price")
+    
+    st.markdown("---")
+    
+    if st.button("🚀 開始抽卡！幫我決定", type="primary", use_container_width=True):
+        # 篩選符合條件的店家池
+        pool = stores
+        if draw_district != "全雲林":
+            pool = [s for s in pool if s.get("district") == draw_district]
+            
+        if draw_type != "不限":
+            pool = [s for s in pool if draw_type in s.get("types", [])]
+            
+        if draw_price != "不限":
+            # 簡單關鍵字過濾
+            if "經濟平價" in draw_price:
+                pool = [s for s in pool if any(c in s.get("price_range", "") for c in ["1", "2", "百", "平", "50", "70", "100"])]
+            elif "精緻質感" in draw_price:
+                pool = [s for s in pool if any(c in s.get("price_range", "") for c in ["5", "6", "7", "8", "9", "千", "1000"])]
+
+        if not pool:
+            st.warning("⚠️ 找不到符合條件的店家耶！放寬條件再抽一次看看吧～")
+        else:
+            # 隨機抽出一張
+            chosen = random.choice(pool)
+            st.success(f"🎉 抽中啦！為您推薦：**{chosen.get('name')}**")
+            
+            # 顯示抽中店家的精美卡片
+            tier = chosen.get("tier", "")
+            if "IG REELS" in tier:
+                c_bg, c_border = "rgba(182, 37, 36, 0.22)", "#b62524"
+            elif "LINE社群" in tier:
+                c_bg, c_border = "rgba(185, 121, 38, 0.22)", "#b97926"
+            else:
+                c_bg, c_border = "rgba(204, 165, 155, 0.35)", "#cca59b"
+                
+            c_name = chosen.get('name', '')
+            c_sub = chosen.get('subtitle', '')
+            c_title = f"{c_name} <span style='font-size: 14.5px; font-weight: normal; color: #803c34;'>| {c_sub}</span>" if c_sub else c_name
+            
+            card_box = f"""
+            <div style="
+                background-color: {c_bg};
+                border: 1.5px solid {c_border};
+                border-radius: 14px;
+                padding: 12px 14px;
+                margin-top: 10px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            ">
+                <h3 style="margin: 0 0 6px 0; font-size: 17px; color: #803c34;">{c_title}</h3>
+            """
+            if chosen.get("description"):
+                card_box += f"<p style='margin: 0 0 6px 0; font-size: 12px; color: #803c34; line-height: 1.3;'>{chosen.get('description')}</p>"
+                
+            c_cat = chosen.get("category", "")
+            c_cat_str = ", ".join(c_cat) if isinstance(c_cat, list) else c_cat
+            tags_h = f"<span style='background-color:#decfbd; color:#803c34; padding:2px 6px; border-radius:4px; font-size:11px; font-weight:bold; border: 1px solid #803c34;'>📍 {chosen.get('district')}</span> "
+            tags_h += f"<span style='background-color:#decfbd; color:#803c34; padding:2px 6px; border-radius:4px; font-size:11px; font-weight:bold; border: 1px solid #803c34;'>🍽️ {c_cat_str}</span> "
+            for t in chosen.get("types", []):
+                tags_h += f"<span style='background-color:#decfbd; color:#803c34; padding:2px 6px; border-radius:4px; font-size:11px; border: 1px solid #803c34;'>🏷️ {t}</span> "
+            card_box += f"<div style='margin-bottom: 6px;'>{tags_h}</div>"
+            
+            if chosen.get("price_range"):
+                card_box += f"<p style='margin: 0 0 6px 0; font-size: 12px; color: #803c34;'>💰 消費均消：{chosen.get('price_range')}</p>"
+                
+            btn_h = "<div style='display: flex; gap: 6px; margin-top: 8px;'>"
+            if chosen.get("ig_url"):
+                btn_h += f"<a href='{chosen.get('ig_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 5px 8px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #803c34;'>📸 IG 介紹</a>"
+            if chosen.get("map_url"):
+                btn_h += f"<a href='{chosen.get('map_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 5px 8px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #803c34;'>🗺️ Google 導航</a>"
+            btn_h += "</div></div>"
+            
+            st.markdown(card_box + btn_h, unsafe_allow_html=True)
+
+
+# --- 側邊欄：進階篩選器與抽卡按鈕 ---
 st.sidebar.header("🔍 雲林美食探索")
 st.sidebar.markdown("尋找在地私藏好味道與拍攝空間。")
+
+# 🎲 在側邊欄加入「今天去哪兒」抽卡按鈕
+st.sidebar.markdown("---")
+st.sidebar.subheader("🎲 選擇障礙救星")
+if st.sidebar.button("🎲 今天去哪兒？(隨機抽卡)", use_container_width=True, type="primary"):
+    random_draw_dialog(stores_data, tags_data)
+st.sidebar.markdown("---")
 
 district_options = ["全雲林"] + tags_data.get("district", ["虎尾", "斗六"])
 selected_district = st.sidebar.selectbox("📍 選擇地區", district_options)
@@ -178,7 +276,6 @@ else:
             types = ", ".join(store.get("types", [])) if store.get("types") else "無"
             price = store.get("price_range", "未標註")
             
-            # 🎯 依據推薦等級動態對應標籤文字顏色與框線顏色
             if "IG REELS" in tier:
                 tag_color = "#b62524"
             elif "LINE社群" in tier:
@@ -239,7 +336,6 @@ else:
 
         st_folium(m, width=None, height=550, use_container_width=True)
         
-        # 地圖下方的篩選結果數量提示
         st.markdown(f"📍 目前為您篩選出 **{len(filtered_stores)}** 間精選店家：")
 
     with list_col:
@@ -261,11 +357,12 @@ else:
             store_sub = store.get('subtitle', '')
             title_display = f"{store_name} <span style='font-size: 14.5px; font-weight: normal; color: #803c34;'>| {store_sub}</span>" if store_sub else store_name
 
+            # 圓角改大為 14px
             card_html = f"""
             <div style="
                 background-color: {card_bg};
                 border: 1.5px solid {card_border};
-                border-radius: 8px;
+                border-radius: 14px;
                 padding: 10px 12px;
                 margin-bottom: 10px;
                 box-shadow: 0 1px 4px rgba(0,0,0,0.04);
@@ -293,9 +390,9 @@ else:
             
             btn_html = "<div style='display: flex; gap: 6px; margin-top: 6px;'>"
             if store.get("ig_url"):
-                btn_html += f"<a href='{store.get('ig_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 4px 8px; border-radius: 5px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #803c34;'>📸 IG 介紹</a>"
+                btn_html += f"<a href='{store.get('ig_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 4px 8px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #803c34;'>📸 IG 介紹</a>"
             if store.get("map_url"):
-                btn_html += f"<a href='{store.get('map_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 4px 8px; border-radius: 5px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #803c34;'>🗺️ Google 導航</a>"
+                btn_html += f"<a href='{store.get('map_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 4px 8px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #803c34;'>🗺️ Google 導航</a>"
             btn_html += "</div>"
             
             card_html += btn_html + "</div>"
