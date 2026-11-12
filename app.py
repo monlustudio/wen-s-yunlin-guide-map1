@@ -112,11 +112,20 @@ def load_json(file_path, default_value):
         return default_value
 
 stores_data = load_json(DATA_FILE, [])
+
+# 確保前台能完整動態讀取 tags.json 內的最新標籤
 default_tags = {
-    "district": ["虎尾", "斗六", "其他雲林鄉鎮", "外縣市"],
-    "category": ["正餐", "小吃", "甜點", "咖啡", "飲品"],
-    "type": ["聚餐", "約會", "放鬆"],
-    "tier": ["IG REELS拍攝店家", "LINE社群 上榜名單", "WEN日常美食推薦"]
+    "district": ["虎尾", "斗六", "古坑", "斗南", "麥寮", "西螺", "土庫", "其他雲林鄉鎮", "外縣市"],
+    "category": [
+        "正餐", "小吃", "咖啡廳", "甜點", "飲料", "點心", "下午茶", 
+        "喝酒", "手作體驗", "遊樂/景點", 
+        "東方料理(中 日 韓  東南亞 中東)", "西方料理(美 義 歐 地中海)", "宵夜/深夜美食"
+    ],
+    "type": [
+        "約會", "放鬆", "聚餐", "慶生", "獨處", 
+        "拍照打卡", "質感空間", "安靜工作", "頂級味蕾饗宴", "出去玩", "日常吃飯"
+    ],
+    "tier": ["IG REELS拍攝店家", "LINE社群 金賞名單", "WEN日常美食推薦"]
 }
 tags_data = load_json(TAGS_FILE, default_tags)
 
@@ -257,11 +266,23 @@ selected_district = st.sidebar.selectbox("📍 選擇地區", district_options)
 category_options = ["不指定"] + tags_data.get("category", ["正餐", "小吃", "甜點", "咖啡", "飲品"])
 selected_category = st.sidebar.selectbox("🍽️ 料理類別", category_options)
 
-type_options = ["不指定"] + tags_data.get("type", ["聚餐", "約會", "放鬆"])
-selected_types = st.sidebar.multiselect("🏷️ 空間/氛圍類型 (可複選)", type_options, default=["不指定"])
+type_options = tags_data.get("type", ["聚餐", "約會", "放鬆"])
+selected_types = st.sidebar.multiselect("🏷️ 空間/氛圍類型 (可複選)", type_options, default=[])
 
 tier_options = tags_data.get("tier", ["IG REELS拍攝店家", "LINE社群 上榜名單", "WEN日常美食推薦"])
 selected_tiers = st.sidebar.multiselect("⭐ 推薦等級 (可複選)", tier_options, default=tier_options)
+
+# 💡 側邊欄下方新增操作方式說明區塊
+st.sidebar.markdown("---")
+st.sidebar.subheader("💡 操作指南")
+st.sidebar.markdown(
+    """
+    - **📍 地區與類別**：點選下拉選單可快速過濾特定鄉鎮或料理風格。
+    - **🏷️ 多選標籤**：空間與氛圍類型支援多重勾選，精準尋找符合當下心情的去處。
+    - **🗺️ 地圖與清單連動**：點擊地圖上的標籤或右側卡片，即可快速開啟 **IG 官方帳號**、**Reels 介紹短片** 或 **Google 導航**。
+    - **🎲 隨機抽卡**：選擇障礙時，點擊下方按鈕讓盲盒幫你決定今天去哪！
+    """
+)
 
 # 🎲 將提示文字與「今天去哪兒」抽卡按鈕放置於側邊欄的最下方
 st.sidebar.markdown("---")
@@ -282,7 +303,7 @@ if selected_category != "不指定":
            (not isinstance(s.get("category"), list) and s.get("category") == selected_category)
     ]
 
-if "不指定" not in selected_types and len(selected_types) > 0:
+if len(selected_types) > 0:
     filtered_stores = [
         s for s in filtered_stores 
         if any(t in s.get("types", []) for t in selected_types)
