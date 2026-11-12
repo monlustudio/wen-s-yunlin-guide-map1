@@ -285,7 +285,7 @@ with st.sidebar.expander("💡 點我看地圖操作小撇步"):
         **🎨 推薦等級與色彩圖例**：
         - <span style="color: #b62524; font-weight: bold;">■ 紅色</span>：IG REELS拍攝店家；曾於IG REELS推薦過的精選雲林店家，最高等級推薦!
         - <span style="color: #b97926; font-weight: bold;">■ 金系</span>：LINE 社群金賞名單；曾於雲林美食LINE社群高分推薦過的店家
-        - <span style="color: #803c34; font-weight: bold;">■ 棕色</span>：WEN日常美食推薦；餐點味道優異!日常生活推薦的美食愛店
+        - <span style="color: #803c34; font-weight: bold;">■ 粉棕色</span>：WEN日常美食推薦；餐點味道優異!日常生活推薦的美食愛店
         - <span style="color: #857ba8; font-weight: bold;">■ 淺紫色</span>：脆友 / 在地網友熱情敲碗推薦；我們尚未實際走訪品嘗過的店家，名單由各方網友強烈推薦，或是地方極具聲量的店家
 
         ---
