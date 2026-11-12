@@ -38,13 +38,18 @@ st.markdown(
         color: #803c34 !important;
     }}
 
-    /* 🎲 抽卡按鈕樣式（上方：深色、字體加粗） */
-    div.stButton > button[kind="secondary"], div.stButton > button {{
+    /* 🎲 抽卡按鈕樣式（讓按鈕文字強制加粗） */
+    div.stButton > button[kind="primary"], div.stButton > button {{
         background-color: #deb37f !important;
         color: #803c34 !important;
         border: 1.5px solid #803c34 !important;
-        font-weight: bold !important;
+        font-weight: 900 !important;
+        font-family: inherit;
         border-radius: 8px !important;
+    }}
+    div.stButton > button p {{
+        font-weight: 900 !important;
+        color: #803c34 !important;
     }}
     div.stButton > button:hover {{
         background-color: #d2c0ab !important;
