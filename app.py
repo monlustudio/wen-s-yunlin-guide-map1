@@ -238,6 +238,8 @@ def random_draw_dialog(stores, tags):
             btn_h = "<div style='display: flex; gap: 6px; margin-top: 8px;'>"
             if chosen.get("ig_url"):
                 btn_h += f"<a href='{chosen.get('ig_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 5px 8px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #803c34;'>📸 IG 介紹</a>"
+            if chosen.get("reels_url"):
+                btn_h += f"<a href='{chosen.get('reels_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 5px 8px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #803c34;'>🎬 Reels 介紹</a>"
             if chosen.get("map_url"):
                 btn_h += f"<a href='{chosen.get('map_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 5px 8px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #803c34;'>🗺️ Google 導航</a>"
             btn_h += "</div></div>"
@@ -314,14 +316,12 @@ else:
             lon = store.get("lon")
             name = store.get("name", "")
             subtitle = store.get("subtitle", "")
+            description = store.get("description", "")
             tier = store.get("tier", "")
             district = store.get("district", "")
-            
-            cat_val = store.get("category", "")
-            cat_str = ", ".join(cat_val) if isinstance(cat_val, list) else cat_val
-            
-            types = ", ".join(store.get("types", [])) if store.get("types") else "無"
-            price = store.get("price_range", "未標註")
+            ig_url = store.get("ig_url", "")
+            reels_url = store.get("reels_url", "")
+            map_url = store.get("map_url", "")
             
             if "IG REELS" in tier:
                 tag_color = "#b62524"
@@ -364,21 +364,33 @@ else:
             </div>
             """
 
+            # 🗺️ 地圖上的 Popup 小視窗（同步支援 IG、Reels、Google 導航按鈕）
+            popup_title = f"{name} <span style='font-size: 14px; font-weight: normal; color: #803c34;'>| {subtitle}</span>" if subtitle else name
+            
             popup_html = f"""
-            <div style="color: #803c34; font-family: sans-serif; min-width: 180px; padding: 4px;">
-                <h4 style="margin: 0 0 6px 0; color: #803c34; font-size: 15px;">【 {name} 】</h4>
-                <p style="margin: 4px 0; font-size: 13px;"><b>副標：</b>{subtitle}</p>
-                <p style="margin: 4px 0; font-size: 13px;"><b>等級：</b>{tier}</p>
-                <p style="margin: 4px 0; font-size: 13px;"><b>地區：</b>{district} | <b>類別：</b>{cat_str}</p>
-                <p style="margin: 4px 0; font-size: 13px;"><b>類型：</b>{types}</p>
-                <p style="margin: 4px 0; font-size: 13px;"><b>均消：</b>{price}</p>
-            </div>
+            <div style="color: #803c34; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; min-width: 200px; max-width: 260px; padding: 4px;">
+                <h4 style="margin: 0 0 6px 0; color: #803c34; font-size: 16px; font-weight: bold;">{popup_title}</h4>
             """
+            if description:
+                popup_html += f"<p style='margin: 0 0 8px 0; font-size: 12px; color: #803c34; line-height: 1.3;'>{description}</p>"
+            
+            popup_html += f"<p style='margin: 0 0 8px 0; font-size: 11px; color: #803c34;'><b>📍 地區：</b>{district} | <b>⭐ 等級：</b>{tier}</p>"
+            
+            btn_h = "<div style='display: flex; gap: 6px; margin-top: 6px;'>"
+            if ig_url:
+                btn_h += f"<a href='{ig_url}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 4px 6px; border-radius: 5px; text-decoration: none; font-size: 11px; font-weight: bold; border: 1px solid #803c34;'>📸 IG 介紹</a>"
+            if reels_url:
+                btn_h += f"<a href='{reels_url}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 4px 6px; border-radius: 5px; text-decoration: none; font-size: 11px; font-weight: bold; border: 1px solid #803c34;'>🎬 Reels 介紹</a>"
+            if map_url:
+                btn_h += f"<a href='{map_url}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 4px 6px; border-radius: 5px; text-decoration: none; font-size: 11px; font-weight: bold; border: 1px solid #803c34;'>🗺️ Google 導航</a>"
+            btn_h += "</div></div>"
+            
+            popup_html += btn_h
 
             folium.Marker(
                 location=[lat, lon],
                 icon=folium.DivIcon(html=html_label),
-                popup=folium.Popup(popup_html, max_width=250)
+                popup=folium.Popup(popup_html, max_width=280)
             ).add_to(m)
 
         st_folium(m, width=None, height=550, use_container_width=True)
@@ -437,6 +449,8 @@ else:
             btn_html = "<div style='display: flex; gap: 6px; margin-top: 6px;'>"
             if store.get("ig_url"):
                 btn_html += f"<a href='{store.get('ig_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 4px 8px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #803c34;'>📸 IG 介紹</a>"
+            if store.get("reels_url"):
+                btn_html += f"<a href='{store.get('reels_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 4px 8px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #803c34;'>🎬 Reels 介紹</a>"
             if store.get("map_url"):
                 btn_html += f"<a href='{store.get('map_url')}' target='_blank' style='flex: 1; text-align: center; background-color: #decfbd; color: #803c34; padding: 4px 8px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #803c34;'>🗺️ Google 導航</a>"
             btn_html += "</div>"
