@@ -113,50 +113,19 @@ def load_json(file_path, default_value):
 
 stores_data = load_json(DATA_FILE, [])
 
-# 🎯 已完整同步 tags.json 的最新預設標籤清單
+# 確保前台能完整動態讀取 tags.json 內的最新標籤
 default_tags = {
-    "district": [
-        "虎尾",
-        "斗六",
-        "古坑",
-        "斗南",
-        "麥寮",
-        "西螺",
-        "土庫"
-    ],
+    "district": ["虎尾", "斗六", "古坑", "斗南", "麥寮", "西螺", "土庫", "其他雲林鄉鎮", "外縣市"],
     "category": [
-        "正餐",
-        "小吃",
-        "咖啡廳",
-        "甜點",
-        "飲料",
-        "點心",
-        "下午茶",
-        "喝酒",
-        "手作體驗",
-        "遊樂/景點",
-        "東方料理(中 日 韓  東南亞 中東)",
-        "西方料理(美 義 歐 地中海)",
-        "宵夜/深夜美食"
+        "正餐", "小吃", "咖啡廳", "甜點", "飲料", "點心", "下午茶", 
+        "喝酒", "手作體驗", "遊樂/景點", 
+        "東方料理(中 日 韓  東南亞 中東)", "西方料理(美 義 歐 地中海)", "宵夜/深夜美食"
     ],
     "type": [
-        "約會",
-        "放鬆",
-        "聚餐",
-        "慶生",
-        "獨處",
-        "拍照打卡",
-        "質感空間",
-        "安靜工作",
-        "頂級味蕾饗宴",
-        "出去玩",
-        "日常吃飯"
+        "約會", "放鬆", "聚餐", "慶生", "獨處", 
+        "拍照打卡", "質感空間", "安靜工作", "頂級味蕾饗宴", "出去玩", "日常吃飯"
     ],
-    "tier": [
-        "IG REELS拍攝店家",
-        "LINE社群 金賞名單",
-        "WEN日常美食推薦"
-    ]
+    "tier": ["IG REELS拍攝店家", "LINE社群 金賞名單", "WEN日常美食推薦"]
 }
 tags_data = load_json(TAGS_FILE, default_tags)
 
@@ -303,7 +272,7 @@ selected_types = st.sidebar.multiselect("🏷️ 空間/氛圍類型 (可複選)
 tier_options = tags_data.get("tier", ["IG REELS拍攝店家", "LINE社群 上榜名單", "WEN日常美食推薦"])
 selected_tiers = st.sidebar.multiselect("⭐ 推薦等級 (可複選)", tier_options, default=tier_options)
 
-# 💡 側邊欄下方可折疊的操作指南 (st.expander)
+# 💡 側邊欄下方新增可折疊的操作指南 (st.expander)
 with st.sidebar.expander("💡 點我看地圖操作小撇步"):
     st.markdown(
         """
@@ -509,4 +478,3 @@ else:
             card_html += btn_html + "</div>"
             
             st.markdown(card_html, unsafe_allow_html=True)
-            
