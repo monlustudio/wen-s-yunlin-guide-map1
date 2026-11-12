@@ -10,7 +10,7 @@ from streamlit_folium import st_folium
 # 設定頁面佈局為寬螢幕
 st.set_page_config(page_title="雲林美食地圖 | Monlu Studio", page_icon="☁️", layout="wide")
 
-# --- CSS 注入：自訂背景色、字體顏色、手機版主標題微調、頂部切齊與按鈕樣式優化 ---
+# --- CSS 注入：自訂背景色、字體顏色、手機版主標題微調、頂部切齊與加大圓角卡片 ---
 st.markdown(
     f"""
     <style>
@@ -38,13 +38,12 @@ st.markdown(
         color: #803c34 !important;
     }}
 
-    /* 🎲 「今天去哪兒？」抽卡按鈕樣式：維持醒目粗體與深框 */
-    div.stButton > button[kind="secondary"], div.stButton > button {{
-        background-color: #decfbd !important;
+    /* 🎲 抽卡按鈕樣式（上方：深色、字體加粗） */
+    div.stButton > button[kind="primary"], div.stButton > button {{
+        background-color: #deb37f !important;
         color: #803c34 !important;
-        border: 2px solid #803c34 !important;
-        font-weight: 900 !important;
-        font-size: 16px !important;
+        border: 1.5px solid #803c34 !important;
+        font-weight: bold !important;
         border-radius: 8px !important;
     }}
     div.stButton > button:hover {{
@@ -152,6 +151,7 @@ def random_draw_dialog(stores, tags):
     st.markdown("---")
     
     if st.button("幫我決定今天要去哪！", type="primary", use_container_width=True):
+        # 篩選符合條件的店家池
         pool = stores
         if draw_district != "全雲林":
             pool = [s for s in pool if s.get("district") == draw_district]
@@ -168,12 +168,18 @@ def random_draw_dialog(stores, tags):
         if not pool:
             st.warning("⚠️ 找不到符合條件的店家耶！放寬條件再抽一次看看吧～")
         else:
+            # 🎯 先決定好最終要中獎的那一家店
             chosen = random.choice(pool)
+            
+            # 🎰 模擬吃角子老虎機特效：前快後慢（漸歇減速機制）
             slot_placeholder = st.empty()
             all_names = [s.get("name") for s in pool]
+            
+            # 設定遞增延遲時間清單（愈後面間隔愈大，營造煞車緩速感）
             delays = [0.03, 0.04, 0.05, 0.07, 0.10, 0.14, 0.19, 0.25, 0.32, 0.40]
             
             for i, d in enumerate(delays):
+                # 如果是最後一次循環，強制顯示中獎的那一家店作為完美的停格點！
                 if i == len(delays) - 1:
                     temp_name = chosen.get("name")
                 else:
@@ -198,6 +204,7 @@ def random_draw_dialog(stores, tags):
                 time.sleep(d)
             
             slot_placeholder.empty()
+            
             st.success(f"今天就去這吧！為您推薦：**{chosen.get('name')}**")
             
             tier = chosen.get("tier", "")
@@ -275,24 +282,24 @@ with st.sidebar.expander("💡 點我看地圖操作小撇步"):
         - ❤️ **紅棕色系**：IG REELS 獨家拍攝與影音開箱
         - 💛 **金棕色系**：LINE 社群金賞與口碑名單
         - 🩷 **粉棕色系**：WEN 日常美食推薦與私房愛店
-        - 💜 **淡紫色系**：脆友 / 在地網友熱情網友私房推薦
+        - 💜 **淡紫色系**：脆友 / 在地網友熱情敲碗推薦
 
         ---
         **🗺️ 快速操作指引**：
         - **📍 地區與類別**：點選下拉選單可快速過濾特定鄉鎮或料理風格。
         - **🏷️ 多選標籤**：空間與氛圍類型支援多重勾選，精準尋找符合當下心情的去處。
         - **🗺️ 地圖與清單連動**：點擊地圖標籤或右側卡片，快速開啟 **IG**、**Reels 短片** 或 **Google 導航**。
-        - **🎲 隨機抽卡**：選擇障礙時, 點擊下方按鈕讓盲盒幫你決定今天去哪！
+        - **🎲 隨機抽卡**：選擇障礙時，點擊下方按鈕讓盲盒幫你決定今天去哪！
         """
     )
 
-# 🎲 1. 將「今天去哪兒？抽卡盲盒」放在上方（維持抽卡按鈕的粗體與深框樣式）
+# 🎲 將提示文字與「今天去哪兒」抽卡按鈕放置於上方（深色背景、字體加粗）
 st.sidebar.markdown("---")
-st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px;'>不知道今天要吃什麼或去哪裡嗎？按這裡幫你決定吧</p>", unsafe_allow_html=True)
+st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px; font-weight: bold;'>不知道今天要吃什麼或去哪裡嗎？按這裡幫你決定吧</p>", unsafe_allow_html=True)
 if st.sidebar.button("今天去哪兒？", use_container_width=True):
     random_draw_dialog(stores_data, tags_data)
 
-# 💬 2. 將「加入 LINE 社群」改為較細的精緻邊框與字體，放在下方
+# 💬 將 LINE 社群按鈕區塊調換至下方（淺色背景、字體不加粗）
 st.sidebar.markdown("---")
 st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px;'>想獲得最新私房情報或提供口袋名單嗎？</p>", unsafe_allow_html=True)
 st.sidebar.markdown(
@@ -302,12 +309,12 @@ st.sidebar.markdown(
         text-align: center;
         background-color: #decfbd;
         color: #803c34;
-        padding: 6px 10px;
+        padding: 8px 12px;
         border-radius: 8px;
         text-decoration: none;
-        font-size: 13.5px;
-        font-weight: 500;
-        border: 1px solid #803c34;
+        font-size: 14px;
+        font-weight: normal;
+        border: 1.5px solid #803c34;
         margin-bottom: 10px;
     ">✨ 加入 Wen's life LINE 社群</a>
     """,
