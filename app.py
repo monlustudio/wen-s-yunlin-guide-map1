@@ -38,17 +38,19 @@ st.markdown(
         color: #803c34 !important;
     }}
 
-    /* 🎲 抽卡按鈕樣式（讓「今天去哪兒？」按鈕字體保持粗體） */
-    div.stButton > button[kind="primary"], div.stButton > button {{
+    /* 🎲 抽卡按鈕樣式（強制將按鈕內的文字設定為粗體） */
+    div.stButton > button {{
         background-color: #deb37f !important;
         color: #803c34 !important;
         border: 1.5px solid #803c34 !important;
-        font-weight: bold !important;
         border-radius: 8px !important;
+    }}
+    div.stButton > button p, div.stButton > button div, div.stButton > button span {{
+        font-weight: 900 !important;
+        color: #803c34 !important;
     }}
     div.stButton > button:hover {{
         background-color: #d2c0ab !important;
-        color: #803c34 !important;
         border-color: #803c34 !important;
     }}
 
@@ -154,7 +156,7 @@ def random_draw_dialog(stores, tags):
         # 篩選符合條件的店家池
         pool = stores
         if draw_district != "全雲林":
-            pool = [s for s in pool if s.get("district") == draw_district]
+            pool = [s for s in pool if s.get("district"] == draw_district]
             
         if draw_type != "不限":
             pool = [s for s in pool if draw_type in s.get("types", [])]
@@ -265,7 +267,9 @@ st.sidebar.markdown("尋找在地私藏好味道與質感空間。")
 district_options = ["全雲林"] + tags_data.get("district", ["虎尾", "斗六"])
 selected_district = st.sidebar.selectbox("📍 選擇地區", district_options)
 
-category_options = ["不指定"] + tags_data.get("category", ["正餐", "小吃", "甜點", "咖啡", "飲品"])
+category_options = ["不指定"] + tags_data.get("category", ["正餐", "小吃", "咖啡廳", "甜點", "飲料", "點心", "下午茶", 
+        "喝酒", "手作體驗", "遊樂/景點", 
+        "東方料理(中 日 韓  東南亞 中東)", "西方料理(美 義 歐 地中海)", "宵夜/深夜美食"])
 selected_category = st.sidebar.selectbox("🍽️ 料理類別", category_options)
 
 type_options = tags_data.get("type", ["聚餐", "約會", "放鬆"])
@@ -294,13 +298,13 @@ with st.sidebar.expander("💡 點我看地圖操作小撇步"):
         unsafe_allow_html=True
     )
 
-# 🎲 將提示文字與「今天去哪兒」抽卡按鈕放置於上方（按鈕內部文字維持粗體）
+# 🎲 將提示文字與「今天去哪兒」抽卡按鈕放置於上方
 st.sidebar.markdown("---")
 st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px; font-weight: normal;'>不知道今天要吃什麼或去哪裡嗎？按這裡幫你決定吧</p>", unsafe_allow_html=True)
 if st.sidebar.button("今天去哪兒？", use_container_width=True):
     random_draw_dialog(stores_data, tags_data)
 
-# 💬 將 LINE 社群按鈕區塊調換至下方（透過 inline style 將按鈕文字強制設為 normal 非粗體）
+# 💬 將 LINE 社群按鈕區塊調換至下方
 st.sidebar.markdown("---")
 st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px; font-weight: normal;'>想獲得最新私房情報或提供口袋名單嗎？</p>", unsafe_allow_html=True)
 st.sidebar.markdown(
@@ -419,7 +423,7 @@ else:
             </div>
             """
 
-            # 🗺️ 地圖上的 Popup 小視窗（同步支援 IG、Reels、Google 導航按鈕）
+            # 🗺️ 地圖上的 Popup 小視窗
             popup_title = f"{name} <span style='font-size: 14px; font-weight: normal; color: #803c34;'>| {subtitle}</span>" if subtitle else name
             
             popup_html = f"""
