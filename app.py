@@ -38,11 +38,11 @@ st.markdown(
         color: #803c34 !important;
     }}
 
-    /* 🎲 抽卡按鈕樣式（強制按鈕內部文字變粗體） */
+    /* 🎲 抽卡按鈕樣式（褐色邊框、加粗外框、按鈕文字粗體） */
     div.stButton > button {{
         background-color: #deb37f !important;
         color: #803c34 !important;
-        border: 1.5px solid #803c34 !important.
+        border: 2px solid #803c34 !important;
         border-radius: 8px !important;
     }}
     div.stButton > button p, div.stButton > button span, div.stButton > button div {{
@@ -267,7 +267,9 @@ st.sidebar.markdown("尋找在地私藏好味道與質感空間。")
 district_options = ["全雲林"] + tags_data.get("district", ["虎尾", "斗六"])
 selected_district = st.sidebar.selectbox("📍 選擇地區", district_options)
 
-category_options = ["不指定"] + tags_data.get("category", ["正餐", "小吃", "甜點", "咖啡", "飲品"])
+category_options = ["不指定"] + tags_data.get("category", ["正餐", "小吃", "咖啡廳", "甜點", "飲料", "點心", "下午茶", 
+        "喝酒", "手作體驗", "遊樂/景點", 
+        "東方料理(中 日 韓  東南亞 中東)", "西方料理(美 義 歐 地中海)", "宵夜/深夜美食"])
 selected_category = st.sidebar.selectbox("🍽️ 料理類別", category_options)
 
 type_options = tags_data.get("type", ["聚餐", "約會", "放鬆"])
@@ -317,7 +319,7 @@ st.sidebar.markdown(
         text-decoration: none;
         font-size: 14px;
         font-weight: normal;
-        border: 1.5px solid #803c34;
+        border: 2px solid #803c34;
         margin-bottom: 10px;
     ">✨ 加入 Wen's life LINE 社群</a>
     """,
