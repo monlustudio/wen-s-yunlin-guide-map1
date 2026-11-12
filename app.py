@@ -39,7 +39,7 @@ st.markdown(
     }}
 
     /* 🎲 抽卡按鈕樣式（上方：深色、字體加粗） */
-    div.stButton > button[kind="primary"], div.stButton > button {{
+    div.stButton > button[kind="secondary"], div.stButton > button {{
         background-color: #deb37f !important;
         color: #803c34 !important;
         border: 1.5px solid #803c34 !important;
@@ -274,15 +274,15 @@ selected_types = st.sidebar.multiselect("🏷️ 空間/氛圍類型 (可複選)
 tier_options = tags_data.get("tier", ["IG REELS拍攝店家", "LINE社群 金賞名單", "WEN日常美食推薦", "脆友/在地網友私房推薦"])
 selected_tiers = st.sidebar.multiselect("⭐ 推薦等級 (可複選)", tier_options, default=tier_options)
 
-# 💡 側邊欄下方新增可折疊的操作指南 (st.expander，包含愛心色彩圖例)
+# 💡 側邊欄下方新增可折疊的操作指南 (st.expander，改用 HTML 色彩標籤文字取代會破圖的 Emoji)
 with st.sidebar.expander("💡 點我看地圖操作小撇步"):
     st.markdown(
         """
         **🎨 推薦等級與色彩圖例**：
-        - ❤️ **紅棕色系**：IG REELS 獨家拍攝與影音開箱
-        - 💛 **金棕色系**：LINE 社群金賞與口碑名單
-        - 🩷 **粉棕色系**：WEN 日常美食推薦與私房愛店
-        - 💜 **淡紫色系**：脆友 / 在地網友熱情敲碗推薦
+        - <span style="color: #b62524; font-weight: bold;">■ 紅棕色系</span>：IG REELS 獨家拍攝與影音開箱
+        - <span style="color: #b97926; font-weight: bold;">■ 金棕色系</span>：LINE 社群金賞與口碑名單
+        - <span style="color: #803c34; font-weight: bold;">■ 粉棕色系</span>：WEN 日常美食推薦與私房愛店
+        - <span style="color: #a39bc4; font-weight: bold;">■ 淡紫色系</span>：脆友 / 在地網友熱情敲碗推薦
 
         ---
         **🗺️ 快速操作指引**：
@@ -290,18 +290,19 @@ with st.sidebar.expander("💡 點我看地圖操作小撇步"):
         - **🏷️ 多選標籤**：空間與氛圍類型支援多重勾選，精準尋找符合當下心情的去處。
         - **🗺️ 地圖與清單連動**：點擊地圖標籤或右側卡片，快速開啟 **IG**、**Reels 短片** 或 **Google 導航**。
         - **🎲 隨機抽卡**：選擇障礙時，點擊下方按鈕讓盲盒幫你決定今天去哪！
-        """
+        """,
+        unsafe_allow_html=True
     )
 
-# 🎲 將提示文字與「今天去哪兒」抽卡按鈕放置於上方（深色背景、字體加粗）
+# 🎲 將提示文字與「今天去哪兒」抽卡按鈕放置於上方（說明文字不加粗，按鈕文字加粗）
 st.sidebar.markdown("---")
-st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px; font-weight: bold;'>不知道今天要吃什麼或去哪裡嗎？按這裡幫你決定吧</p>", unsafe_allow_html=True)
+st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px; font-weight: normal;'>不知道今天要吃什麼或去哪裡嗎？按這裡幫你決定吧</p>", unsafe_allow_html=True)
 if st.sidebar.button("今天去哪兒？", use_container_width=True):
     random_draw_dialog(stores_data, tags_data)
 
-# 💬 將 LINE 社群按鈕區塊調換至下方（淺色背景、字體不加粗）
+# 💬 將 LINE 社群按鈕區塊調換至下方（說明文字不加粗，按鈕文字加粗）
 st.sidebar.markdown("---")
-st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px;'>想獲得最新私房情報或提供口袋名單嗎？</p>", unsafe_allow_html=True)
+st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px; font-weight: normal;'>想獲得最新私房情報或提供口袋名單嗎？</p>", unsafe_allow_html=True)
 st.sidebar.markdown(
     """
     <a href="https://line.me/ti/g2/你的社群邀請連結" target="_blank" style="
@@ -313,7 +314,7 @@ st.sidebar.markdown(
         border-radius: 8px;
         text-decoration: none;
         font-size: 14px;
-        font-weight: normal;
+        font-weight: bold;
         border: 1.5px solid #803c34;
         margin-bottom: 10px;
     ">✨ 加入 Wen's life LINE 社群</a>
