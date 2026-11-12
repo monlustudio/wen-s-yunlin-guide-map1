@@ -38,9 +38,9 @@ st.markdown(
         color: #803c34 !important;
     }}
 
-    /* 🎲 自訂淡金色抽卡按鈕樣式 */
+    /* 🎲 自訂淡金色抽卡按鈕樣式 (原LINE社群的深框金色樣式) */
     div.stButton > button[kind="secondary"], div.stButton > button {{
-        background-color: #decfbd !important;
+        background-color: #deb37f !important;
         color: #803c34 !important;
         border: 1.5px solid #803c34 !important;
         font-weight: bold !important;
@@ -293,7 +293,13 @@ with st.sidebar.expander("💡 點我看地圖操作小撇步"):
         """
     )
 
-# 💬 加入 LINE 社群按鈕區塊
+# 🎲 1. 將「今天去哪兒？抽卡盲盒」移到上方，並改用原 LINE 社群的深框金色樣式
+st.sidebar.markdown("---")
+st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px;'>不知道今天要吃什麼或去哪裡嗎？按這裡幫你決定吧</p>", unsafe_allow_html=True)
+if st.sidebar.button("今天去哪兒？", use_container_width=True):
+    random_draw_dialog(stores_data, tags_data)
+
+# 💬 2. 將「加入 LINE 社群」移到下方，並改用原抽卡按鈕的淡金/米色簡約樣式
 st.sidebar.markdown("---")
 st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px;'>想獲得最新私房情報或提供口袋名單嗎？</p>", unsafe_allow_html=True)
 st.sidebar.markdown(
@@ -301,7 +307,7 @@ st.sidebar.markdown(
     <a href="https://line.me/ti/g2/你的社群邀請連結" target="_blank" style="
         display: block;
         text-align: center;
-        background-color: #deb37f;
+        background-color: #decfbd;
         color: #803c34;
         padding: 8px 12px;
         border-radius: 8px;
@@ -314,12 +320,6 @@ st.sidebar.markdown(
     """,
     unsafe_allow_html=True
 )
-
-# 🎲 將提示文字與「今天去哪兒」抽卡按鈕放置於側邊欄的最下方
-st.sidebar.markdown("---")
-st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px;'>不知道今天要吃什麼或去哪裡嗎？按這裡幫你決定吧</p>", unsafe_allow_html=True)
-if st.sidebar.button("今天去哪兒？", use_container_width=True):
-    random_draw_dialog(stores_data, tags_data)
 
 # --- 過濾資料邏輯 ---
 filtered_stores = stores_data
