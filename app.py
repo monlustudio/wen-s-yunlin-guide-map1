@@ -272,15 +272,16 @@ selected_types = st.sidebar.multiselect("🏷️ 空間/氛圍類型 (可複選)
 tier_options = tags_data.get("tier", ["IG REELS拍攝店家", "LINE社群 上榜名單", "WEN日常美食推薦"])
 selected_tiers = st.sidebar.multiselect("⭐ 推薦等級 (可複選)", tier_options, default=tier_options)
 
-# 💡 側邊欄下方新增操作方式說明區塊
-st.sidebar.markdown("---")
-st.sidebar.subheader("💡 操作指南")
-st.sidebar.markdown(
-    """
-    - **可以根據自己的需求，如地區、行程類型快速過濾出推薦的店家，設定完地圖上就會自動更新囉。
-
-    """
-)
+# 💡 側邊欄下方新增可折疊的操作指南 (st.expander)
+with st.sidebar.expander("💡 點我看地圖操作小撇步"):
+    st.markdown(
+        """
+        - **📍 地區與類別**：點選下拉選單可快速過濾特定鄉鎮或料理風格。
+        - **🏷️ 多選標籤**：空間與氛圍類型支援多重勾選，精準尋找符合當下心情的去處。
+        - **🗺️ 地圖與清單連動**：點擊地圖上的標籤或右側卡片，即可快速開啟 **IG 官方帳號**、**Reels 介紹短片** 或 **Google 導航**。
+        - **🎲 隨機抽卡**：選擇障礙時，點擊下方按鈕讓盲盒幫你決定今天去哪！
+        """
+    )
 
 # 🎲 將提示文字與「今天去哪兒」抽卡按鈕放置於側邊欄的最下方
 st.sidebar.markdown("---")
