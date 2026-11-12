@@ -125,7 +125,7 @@ default_tags = {
         "約會", "放鬆", "聚餐", "慶生", "獨處", 
         "拍照打卡", "質感空間", "安靜工作", "頂級味蕾饗宴", "出去玩", "日常吃飯"
     ],
-    "tier": ["IG REELS拍攝店家", "LINE社群 金賞名單", "WEN日常美食推薦"]
+    "tier": ["IG REELS拍攝店家", "LINE社群 金賞名單", "WEN日常美食推薦", "脆友/在地網友私房推薦"]
 }
 tags_data = load_json(TAGS_FILE, default_tags)
 
@@ -212,6 +212,8 @@ def random_draw_dialog(stores, tags):
                 c_bg, c_border = "rgba(182, 37, 36, 0.22)", "#b62524"
             elif "LINE社群" in tier:
                 c_bg, c_border = "rgba(185, 121, 38, 0.22)", "#b97926"
+            elif "脆友" in tier or "網友" in tier:
+                c_bg, c_border = "rgba(163, 155, 196, 0.25)", "#a39bc4"
             else:
                 c_bg, c_border = "rgba(204, 165, 155, 0.35)", "#cca59b"
                 
@@ -269,19 +271,49 @@ selected_category = st.sidebar.selectbox("🍽️ 料理類別", category_option
 type_options = tags_data.get("type", ["聚餐", "約會", "放鬆"])
 selected_types = st.sidebar.multiselect("🏷️ 空間/氛圍類型 (可複選)", type_options, default=[])
 
-tier_options = tags_data.get("tier", ["IG REELS拍攝店家", "LINE社群 上榜名單", "WEN日常美食推薦"])
+tier_options = tags_data.get("tier", ["IG REELS拍攝店家", "LINE社群 金賞名單", "WEN日常美食推薦", "脆友/在地網友私房推薦"])
 selected_tiers = st.sidebar.multiselect("⭐ 推薦等級 (可複選)", tier_options, default=tier_options)
 
-# 💡 側邊欄下方新增可折疊的操作指南 (st.expander)
+# 💡 側邊欄下方新增可折疊的操作指南 (st.expander，包含愛心色彩圖例)
 with st.sidebar.expander("💡 點我看地圖操作小撇步"):
     st.markdown(
         """
+        **🎨 推薦等級與色彩圖例**：
+        - ❤️ **紅棕色系**：IG REELS 獨家拍攝與影音開箱
+        - 💛 **金棕色系**：LINE 社群金賞與口碑名單
+        - 🩷 **粉棕色系**：WEN 日常美食推薦與私房愛店
+        - 💜 **淡紫色系**：脆友 / 在地網友熱情敲碗推薦
+
+        ---
+        **🗺️ 快速操作指引**：
         - **📍 地區與類別**：點選下拉選單可快速過濾特定鄉鎮或料理風格。
         - **🏷️ 多選標籤**：空間與氛圍類型支援多重勾選，精準尋找符合當下心情的去處。
-        - **🗺️ 地圖與清單連動**：點擊地圖上的標籤或右側卡片，即可快速開啟 **IG 官方帳號**、**Reels 介紹短片** 或 **Google 導航**。
+        - **🗺️ 地圖與清單連動**：點擊地圖標籤或右側卡片，快速開啟 **IG**、**Reels 短片** 或 **Google 導航**。
         - **🎲 隨機抽卡**：選擇障礙時，點擊下方按鈕讓盲盒幫你決定今天去哪！
         """
     )
+
+# 💬 加入 LINE 社群按鈕區塊
+st.sidebar.markdown("---")
+st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px;'>想獲得最新私房情報或提供口袋名單嗎？</p>", unsafe_allow_html=True)
+st.sidebar.markdown(
+    """
+    <a href="https://line.me/ti/g2/你的社群邀請連結" target="_blank" style="
+        display: block;
+        text-align: center;
+        background-color: #deb37f;
+        color: #803c34;
+        padding: 8px 12px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+        border: 1.5px solid #803c34;
+        margin-bottom: 10px;
+    ">✨ 加入 Wen's life LINE 社群</a>
+    """,
+    unsafe_allow_html=True
+)
 
 # 🎲 將提示文字與「今天去哪兒」抽卡按鈕放置於側邊欄的最下方
 st.sidebar.markdown("---")
@@ -347,6 +379,8 @@ else:
                 tag_color = "#b62524"
             elif "LINE社群" in tier:
                 tag_color = "#b97926"
+            elif "脆友" in tier or "網友" in tier:
+                tag_color = "#a39bc4"
             else:
                 tag_color = "#803c34"
 
@@ -428,6 +462,9 @@ else:
             elif "LINE社群" in tier:
                 card_bg = "rgba(185, 121, 38, 0.22)"
                 card_border = "#b97926"
+            elif "脆友" in tier or "網友" in tier:
+                card_bg = "rgba(163, 155, 196, 0.25)"
+                card_border = "#a39bc4"
             else:
                 card_bg = "rgba(204, 165, 155, 0.35)"
                 card_border = "#cca59b"
