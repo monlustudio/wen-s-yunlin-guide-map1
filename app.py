@@ -38,15 +38,15 @@ st.markdown(
         color: #803c34 !important;
     }}
 
-    /* 🎲 抽卡按鈕樣式（強制將按鈕內的文字設定為粗體） */
+    /* 🎲 抽卡按鈕樣式（強制按鈕內部文字變粗體） */
     div.stButton > button {{
         background-color: #deb37f !important;
         color: #803c34 !important;
-        border: 1.5px solid #803c34 !important;
+        border: 1.5px solid #803c34 !important.
         border-radius: 8px !important;
     }}
-    div.stButton > button p, div.stButton > button div, div.stButton > button span {{
-        font-weight: 900 !important;
+    div.stButton > button p, div.stButton > button span, div.stButton > button div {{
+        font-weight: bold !important;
         color: #803c34 !important;
     }}
     div.stButton > button:hover {{
@@ -156,7 +156,7 @@ def random_draw_dialog(stores, tags):
         # 篩選符合條件的店家池
         pool = stores
         if draw_district != "全雲林":
-            pool = [s for s in pool if s.get("district"] == draw_district]
+            pool = [s for s in pool if s.get("district") == draw_district]
             
         if draw_type != "不限":
             pool = [s for s in pool if draw_type in s.get("types", [])]
@@ -267,9 +267,7 @@ st.sidebar.markdown("尋找在地私藏好味道與質感空間。")
 district_options = ["全雲林"] + tags_data.get("district", ["虎尾", "斗六"])
 selected_district = st.sidebar.selectbox("📍 選擇地區", district_options)
 
-category_options = ["不指定"] + tags_data.get("category", ["正餐", "小吃", "咖啡廳", "甜點", "飲料", "點心", "下午茶", 
-        "喝酒", "手作體驗", "遊樂/景點", 
-        "東方料理(中 日 韓  東南亞 中東)", "西方料理(美 義 歐 地中海)", "宵夜/深夜美食"])
+category_options = ["不指定"] + tags_data.get("category", ["正餐", "小吃", "甜點", "咖啡", "飲品"])
 selected_category = st.sidebar.selectbox("🍽️ 料理類別", category_options)
 
 type_options = tags_data.get("type", ["聚餐", "約會", "放鬆"])
@@ -423,7 +421,7 @@ else:
             </div>
             """
 
-            # 🗺️ 地圖上的 Popup 小視窗
+            # 🗺️ 地圖上的 Popup 小視窗（同步支援 IG、Reels、Google 導航按鈕）
             popup_title = f"{name} <span style='font-size: 14px; font-weight: normal; color: #803c34;'>| {subtitle}</span>" if subtitle else name
             
             popup_html = f"""
