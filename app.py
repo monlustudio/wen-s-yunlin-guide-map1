@@ -38,7 +38,7 @@ st.markdown(
         color: #803c34 !important;
     }}
 
-    /* 🎲 抽卡按鈕樣式（褐色邊框、加粗外框、按鈕文字粗體） */
+    /* 🎲 抽卡按鈕樣式 */
     div.stButton > button {{
         background-color: #deb37f !important;
         color: #803c34 !important;
@@ -215,7 +215,7 @@ def random_draw_dialog(stores, tags):
             elif "LINE社群" in tier:
                 c_bg, c_border = "rgba(185, 121, 38, 0.22)", "#b97926"
             elif "脆友" in tier or "網友" in tier:
-                c_bg, c_border = "rgba(163, 155, 196, 0.25)", "#a39bc4"
+                c_bg, c_border = "rgba(133, 123, 168, 0.3)", "#857ba8"
             else:
                 c_bg, c_border = "rgba(204, 165, 155, 0.35)", "#cca59b"
                 
@@ -278,7 +278,7 @@ selected_types = st.sidebar.multiselect("🏷️ 空間/氛圍類型 (可複選)
 tier_options = tags_data.get("tier", ["IG REELS拍攝店家", "LINE社群 金賞名單", "WEN日常美食推薦", "脆友/在地網友私房推薦"])
 selected_tiers = st.sidebar.multiselect("⭐ 推薦等級 (可複選)", tier_options, default=tier_options)
 
-# 💡 側邊欄下方新增可折疊的操作指南 (st.expander，改用 HTML 色彩標籤文字取代會破圖的 Emoji)
+# 💡 側邊欄下方新增可折疊的操作指南 (st.expander，更新紫色系圖例色碼)
 with st.sidebar.expander("💡 點我看地圖操作小撇步"):
     st.markdown(
         """
@@ -286,7 +286,7 @@ with st.sidebar.expander("💡 點我看地圖操作小撇步"):
         - <span style="color: #b62524; font-weight: bold;">■ 紅棕色系</span>：IG REELS 獨家拍攝與影音開箱
         - <span style="color: #b97926; font-weight: bold;">■ 金棕色系</span>：LINE 社群金賞與口碑名單
         - <span style="color: #803c34; font-weight: bold;">■ 粉棕色系</span>：WEN 日常美食推薦與私房愛店
-        - <span style="color: #a39bc4; font-weight: bold;">■ 淡紫色系</span>：脆友 / 在地網友熱情敲碗推薦
+        - <span style="color: #857ba8; font-weight: bold;">■ 深紫色系</span>：脆友 / 在地網友熱情敲碗推薦
 
         ---
         **🗺️ 快速操作指引**：
@@ -304,7 +304,7 @@ st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-botto
 if st.sidebar.button("今天去哪兒？", use_container_width=True):
     random_draw_dialog(stores_data, tags_data)
 
-# 💬 將 LINE 社群按鈕區塊調換至下方
+# 💬 將 LINE 社群按鈕區塊調換至下方（邊框改回 1.5px 細框）
 st.sidebar.markdown("---")
 st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px; font-weight: normal;'>想獲得最新私房情報或提供口袋名單嗎？</p>", unsafe_allow_html=True)
 st.sidebar.markdown(
@@ -319,7 +319,7 @@ st.sidebar.markdown(
         text-decoration: none;
         font-size: 14px;
         font-weight: normal;
-        border: 2px solid #803c34;
+        border: 1.5px solid #803c34;
         margin-bottom: 10px;
     ">✨ 加入 Wen's life LINE 社群</a>
     """,
@@ -385,7 +385,7 @@ else:
             elif "LINE社群" in tier:
                 tag_color = "#b97926"
             elif "脆友" in tier or "網友" in tier:
-                tag_color = "#a39bc4"
+                tag_color = "#857ba8"
             else:
                 tag_color = "#803c34"
 
@@ -468,8 +468,8 @@ else:
                 card_bg = "rgba(185, 121, 38, 0.22)"
                 card_border = "#b97926"
             elif "脆友" in tier or "網友" in tier:
-                card_bg = "rgba(163, 155, 196, 0.25)"
-                card_border = "#a39bc4"
+                card_bg = "rgba(133, 123, 168, 0.3)"
+                card_border = "#857ba8"
             else:
                 card_bg = "rgba(204, 165, 155, 0.35)"
                 card_border = "#cca59b"
