@@ -38,18 +38,13 @@ st.markdown(
         color: #803c34 !important;
     }}
 
-    /* 🎲 抽卡按鈕樣式（讓按鈕文字強制加粗） */
+    /* 🎲 抽卡按鈕樣式（一般粗體） */
     div.stButton > button[kind="primary"], div.stButton > button {{
         background-color: #deb37f !important;
         color: #803c34 !important;
         border: 1.5px solid #803c34 !important;
-        font-weight: 900 !important;
-        font-family: inherit;
+        font-weight: bold !important;
         border-radius: 8px !important;
-    }}
-    div.stButton > button p {{
-        font-weight: 900 !important;
-        color: #803c34 !important;
     }}
     div.stButton > button:hover {{
         background-color: #d2c0ab !important;
@@ -299,13 +294,13 @@ with st.sidebar.expander("💡 點我看地圖操作小撇步"):
         unsafe_allow_html=True
     )
 
-# 🎲 將提示文字與「今天去哪兒」抽卡按鈕放置於上方（說明文字不加粗，按鈕文字加粗）
+# 🎲 將提示文字與「今天去哪兒」抽卡按鈕放置於上方（說明文字不加粗，按鈕文字維持標準粗體）
 st.sidebar.markdown("---")
 st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px; font-weight: normal;'>不知道今天要吃什麼或去哪裡嗎？按這裡幫你決定吧</p>", unsafe_allow_html=True)
 if st.sidebar.button("今天去哪兒？", use_container_width=True):
     random_draw_dialog(stores_data, tags_data)
 
-# 💬 將 LINE 社群按鈕區塊調換至下方（說明文字不加粗，按鈕文字加粗）
+# 💬 將 LINE 社群按鈕區塊調換至下方（說明文字不加粗，按鈕文字維持標準粗體）
 st.sidebar.markdown("---")
 st.sidebar.markdown("<p style='font-size: 13px; text-align: center; margin-bottom: 6px; font-weight: normal;'>想獲得最新私房情報或提供口袋名單嗎？</p>", unsafe_allow_html=True)
 st.sidebar.markdown(
