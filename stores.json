@@ -19,6 +19,7 @@
         ],
         "tier": "IG REELS拍攝店家",
         "ig_url": "https://www.instagram.com/baissu.tw/",
+        "reels_url": "https://www.instagram.com/reel/DfGu1UEzC9_/",
         "map_url": "https://www.google.com/maps/place/%E7%99%BD%E5%BA%8F%E8%B1%86%E8%8A%B1/@23.7169424,120.4348852,14.75z/data=!4m10!1m2!2m1!1z6LGG6Iqx!3m6!1s0x346eb7aa43913b39:0x1a63000a44b0bd2d!8m2!3d23.710454!4d120.435889!15sCgbosYboirFaCCIG6LGG6IqxkgEMZGVzc2VydF9zaG9w4AEA!16s%2Fg%2F11zc5zdw7x?entry=ttu&g_ep=EgoyMDI2MTEwNC4wIKXMDSoASAFQAw%3D%3D",
         "lat": 23.710454,
         "lon": 120.435889
@@ -32,7 +33,7 @@
         "category": [
             "飲料",
             "甜點",
-            "咖啡廳"
+            "下午茶"
         ],
         "types": [
             "約會",
@@ -55,7 +56,8 @@
         "price_range": "500-1500",
         "district": "虎尾",
         "category": [
-            "遊樂"
+            "手作體驗",
+            "遊樂/景點"
         ],
         "types": [
             "約會",
@@ -66,6 +68,7 @@
         ],
         "tier": "IG REELS拍攝店家",
         "ig_url": "https://www.instagram.com/favorland_2002/",
+        "reels_url": "https://www.instagram.com/reel/Dd_F2BtTkCb/",
         "map_url": "https://www.google.com.tw/maps/place/%E9%87%80%E5%B3%B6+%EF%BD%9C+Favorland+%E8%99%8E%E5%B0%BE%E9%87%80%E9%85%92%E5%BB%A0/@23.6810346,120.4072354,912m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346eba46b84fb277:0x6bdf913583229645!8m2!3d23.6810297!4d120.4098157!16s%2Fg%2F11dym7b8xg?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
         "lat": 23.6810297,
         "lon": 120.4098157
@@ -77,9 +80,7 @@
         "price_range": "250-400",
         "district": "斗六",
         "category": [
-            "正餐",
-            "中式料理",
-            "西式料理"
+            "正餐"
         ],
         "types": [
             "約會",
@@ -89,6 +90,7 @@
         ],
         "tier": "IG REELS拍攝店家",
         "ig_url": "https://www.instagram.com/saanvi__curry/reels/",
+        "reels_url": "https://www.instagram.com/reel/De1U6tYTr2G/",
         "map_url": "https://www.google.com.tw/maps/place/%E8%BF%B4%E9%A6%99%E4%BA%BAx%E9%A6%99%E6%96%99%E5%92%96%E5%93%A9%E9%87%8E%E8%8F%9C%E5%B1%8B/@23.7155125,120.5407251,912m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346ec9667df37ccf:0x6fbeda70316278ba!8m2!3d23.7155076!4d120.5433054!16s%2Fg%2F11z90s4l2s?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
         "lat": 23.7155076,
         "lon": 120.5433054
@@ -110,6 +112,7 @@
         ],
         "tier": "IG REELS拍攝店家",
         "ig_url": "https://www.instagram.com/knights_bar/",
+        "reels_url": "https://www.instagram.com/reel/Ddl_Umhzw-A/",
         "map_url": "https://www.google.com.tw/maps/place/Knight's+Bar+(K-BAR)/@23.7107958,120.5411676,912m/data=!3m3!1e3!4b1!5s0x346ec83a60922471:0x58b64a2996cb065!4m6!3m5!1s0x346ec91cff1e2575:0x6d3d19750fe2bc85!8m2!3d23.7107932!4d120.5425417!16s%2Fg%2F11sqpdj7bw?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
         "lat": 23.7107932,
         "lon": 120.5425417
@@ -123,7 +126,7 @@
         "category": [
             "咖啡廳",
             "飲料",
-            "遊樂"
+            "遊樂/景點"
         ],
         "types": [
             "拍照打卡",
@@ -133,6 +136,7 @@
         ],
         "tier": "IG REELS拍攝店家",
         "ig_url": "https://www.instagram.com/laihe.kaocha/",
+        "reels_url": "",
         "map_url": "https://www.google.com.tw/maps/place/%E4%BE%86%E7%A6%BE%E7%83%A4%E8%8C%B6+%E5%9C%8D%E7%88%90%E7%85%AE%E8%8C%B6+%E5%A4%9C%E6%99%AF%E5%92%96%E5%95%A1%E5%BB%B3/@23.5951304,120.5782158,913m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346ec7e779aa5a23:0xad8da758e26c7a71!8m2!3d23.5951255!4d120.5807961!16s%2Fg%2F11zb3rypg8?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
         "lat": 23.5951255,
         "lon": 120.5807961
@@ -146,7 +150,7 @@
         "category": [
             "點心",
             "甜點",
-            "遊樂"
+            "遊樂/景點"
         ],
         "types": [
             "約會",
@@ -158,6 +162,7 @@
         ],
         "tier": "IG REELS拍攝店家",
         "ig_url": "https://www.instagram.com/tukuyi_cocoa/",
+        "reels_url": "https://www.instagram.com/reel/DdYmWB_z5QS/",
         "map_url": "https://www.google.com.tw/maps/place/%E5%9C%9F%E5%BA%AB%E9%A9%9B%E5%8F%AF%E5%8F%AF%E8%8E%8A%E5%9C%92/@23.675169,120.3960671,912m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346ebb691b6750bb:0xeb67a3bfec6eb85f!8m2!3d23.6751641!4d120.3986474!16s%2Fg%2F11j4ly02d9?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
         "lat": 23.6751641,
         "lon": 120.3986474
@@ -181,6 +186,7 @@
         ],
         "tier": "IG REELS拍攝店家",
         "ig_url": "https://www.instagram.com/song.wu.1980/",
+        "reels_url": "https://www.instagram.com/reel/DfW9fFcTPvA/",
         "map_url": "https://www.google.com.tw/maps/place/%E6%9D%BE%E5%B1%8B%E6%B4%8B%E9%A2%A8%E5%92%8C%E9%A3%9F%E9%A4%A8/@23.7107274,120.5418634,912m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346ec83a10b2956d:0xb11995106d8dd040!8m2!3d23.7107225!4d120.5444437!16s%2Fg%2F1td1b4_g?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
         "lat": 23.7107225,
         "lon": 120.5444437
@@ -236,10 +242,12 @@
             "東方料理(中 日 韓  東南亞 中東)"
         ],
         "types": [
-            "頂級味蕾饗宴"
+            "頂級味蕾饗宴",
+            "日常吃飯"
         ],
         "tier": "LINE社群 金賞名單",
         "ig_url": "https://www.instagram.com/wenchang_huwei/",
+        "reels_url": "",
         "map_url": "https://www.google.com.tw/maps/place/%E8%99%8E%E7%A7%8B%E6%96%87%E6%98%8C%E9%9B%9E/@23.7083097,120.4324803,912m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346eb132ac238bcf:0xa67dc9bcc6df2ffd!8m2!3d23.7083048!4d120.4350606!16s%2Fg%2F11sb0bxc0f?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
         "lat": 23.7083048,
         "lon": 120.4350606
@@ -279,5 +287,191 @@
         "map_url": "https://www.google.com.tw/maps/place/%E8%99%8E%E5%B0%BE%E5%9C%B0%E7%93%9C%E7%90%83/@23.7063075,120.4218931,3648m/data=!3m1!1e3!4m6!3m5!1s0x346eb0a8f6e2404f:0x81e6b688374add13!8m2!3d23.708044!4d120.426286!16s%2Fg%2F11f3n1fgn7?entry=ttu&g_ep=EgoyMDI2MTEwOC4wIKXMDSoASAFQAw%3D%3D",
         "lat": 23.708044,
         "lon": 120.426286
+    },
+    {
+        "name": "墨噠燒肉",
+        "subtitle": "肉品極致美味的燒肉店",
+        "description": "這間燒肉店提供肉質與口感足夠高級的肉品\n是追求極致口感的燒肉店 深受愛吃肉的饕客愛戴\n燒肉採單點或套餐制",
+        "price_range": "900-2000",
+        "district": "虎尾",
+        "category": [
+            "正餐"
+        ],
+        "types": [
+            "約會",
+            "聚餐",
+            "慶生",
+            "頂級味蕾饗宴"
+        ],
+        "tier": "IG REELS拍攝店家",
+        "ig_url": "https://www.instagram.com/yakiniku.moda/",
+        "reels_url": "https://www.instagram.com/reel/Dddv5DGz1BT/",
+        "map_url": "https://www.google.com.tw/maps/place/%E5%A2%A8%E5%99%A0%E7%87%92%E8%82%89/@23.7010438,120.531648,875m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346ec9aa590fc901:0x782ed7c527228afc!8m2!3d23.7010389!4d120.5342283!16s%2Fg%2F11y3hwmh_5?entry=ttu&g_ep=EgoyMDI2MTEwOS4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.7010389,
+        "lon": 120.5342283
+    },
+    {
+        "name": "虎尾 無名麵攤",
+        "subtitle": "當地人都推薦的小吃店",
+        "description": "每到夜晚 就會有需多居民前來用餐\n除了提供麵食 魯肉飯 湯品等飽食的庶民小吃外\n這邊追招牌可口的是它們滷到黑嚕嚕的滷味，非常好吃!",
+        "price_range": "50-150",
+        "district": "虎尾",
+        "category": [
+            "正餐",
+            "東方料理(中 日 韓  東南亞 中東)"
+        ],
+        "types": [
+            "日常吃飯"
+        ],
+        "tier": "LINE社群 金賞名單",
+        "ig_url": "",
+        "reels_url": "",
+        "map_url": "https://www.google.com.tw/maps/place/%E7%84%A1%E5%90%8D%E9%BA%B5%E6%94%A4%EF%BC%88%E5%A4%A7%E8%83%96%E9%BA%B5%E5%BA%97%EF%BC%89/@23.7130875,120.4343505,875m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346eb752a3e9c4e5:0x62fa3ed447ddc131!8m2!3d23.7130826!4d120.4369308!16s%2Fg%2F12hp_p_3y?entry=ttu&g_ep=EgoyMDI2MTEwOS4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.7130826,
+        "lon": 120.4369308
+    },
+    {
+        "name": "默默咖啡",
+        "subtitle": "受虎尾人歡迎的咖啡與飲品專賣店",
+        "description": "",
+        "price_range": "100-200",
+        "district": "虎尾",
+        "category": [
+            "咖啡廳",
+            "飲料"
+        ],
+        "types": [
+            "放鬆",
+            "日常吃飯",
+            "獨處"
+        ],
+        "tier": "WEN日常美食推薦",
+        "ig_url": "https://www.instagram.com/momocoffee_huwei/",
+        "reels_url": "",
+        "map_url": "https://www.google.com.tw/maps/place/%E9%BB%98%E9%BB%98%E5%92%96%E5%95%A1-%E8%99%8E%E5%B0%BE%E7%B8%BD%E5%BA%97/@23.7101009,120.4026461,6999m/data=!3m1!1e3!4m10!1m2!2m1!1z6buY6buY5ZKW5ZWh!3m6!1s0x346eb7b13cce887f:0x18cf9e87acd8640a!8m2!3d23.7101041!4d120.4386986!15sCgzpu5jpu5jlkpbllaFaDyIN6buY6buYIOWSluWVoZIBBGNhZmWaASRDaGREU1VoTk1HOW5TMFZKUTBGblNVTndhV1JZWDNkblJSQULgAQD6AQQIABAI!16s%2Fg%2F11hds32vjt?entry=ttu&g_ep=EgoyMDI2MTEwOS4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.7101041,
+        "lon": 120.4386986
+    },
+    {
+        "name": "樂包子",
+        "subtitle": "雲林最有名的包子饅頭專賣店",
+        "description": "傳承三代的包子饅頭專賣店，麵體採老麵發酵每日現蒸\n是雲林居民時常會購買的店家",
+        "price_range": "20-100",
+        "district": "虎尾",
+        "category": [
+            "小吃"
+        ],
+        "types": [
+            "日常吃飯"
+        ],
+        "tier": "WEN日常美食推薦",
+        "ig_url": "https://www.instagram.com/le.baozi/",
+        "reels_url": "",
+        "map_url": "https://www.google.com.tw/maps/place/%E6%A8%82%E5%8C%85%E5%AD%90LeBaozi/@23.7074533,120.4125439,3500m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346eb0abc58d8a23:0x236c70878029a2f4!8m2!3d23.7074347!4d120.4309764!16s%2Fg%2F11dzdsgzc9?entry=ttu&g_ep=EgoyMDI2MTEwOS4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.7074347,
+        "lon": 120.4309764
+    },
+    {
+        "name": "虎尾神農",
+        "subtitle": "清新退暑的古早味飲品店",
+        "description": "虎尾神農販售著現代少有的古早味消暑飲料\n每杯飲料都傳承了古人智結晶與好味道\n在這裡可以喝到消暑的 青草茶、蓮藕茶、枸杞茶、檸檬茶等等的傳統美味",
+        "price_range": "40-60",
+        "district": "虎尾",
+        "category": [
+            "飲料"
+        ],
+        "types": [
+            "日常吃飯"
+        ],
+        "tier": "LINE社群 金賞名單",
+        "ig_url": "",
+        "reels_url": "",
+        "map_url": "https://www.google.com.tw/maps/place/%E8%99%8E%E5%B0%BE%E7%A5%9E%E8%BE%B2(%E7%B8%BD%E5%BA%97)/@23.7067737,120.4301103,875m/data=!3m1!1e3!4m10!1m2!2m1!1z6JmO5bC-56We6L6y!3m6!1s0x346eb0ab56fcb641:0xbf5cd6f751bdb18b!8m2!3d23.7083551!4d120.435187!15sCgzomY7lsL7npZ7ovrJaDyIN6JmO5bC-IOelnui-spIBGGljZV9jcmVhbV9hbmRfZHJpbmtfc2hvcOABAA!16s%2Fg%2F11b6v8xrjt?entry=ttu&g_ep=EgoyMDI2MTEwOS4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.7083551,
+        "lon": 120.435187
+    },
+    {
+        "name": "OING",
+        "subtitle": "虎尾的特級茶品 手搖專賣店",
+        "description": "專販極致好茶的人氣飲料店\n每個季節都會結合當季時令鮮果製作成風味極佳的鮮果茶飲\n是品嘗後會讚不絕的高分飲料店!\n",
+        "price_range": "70-100",
+        "district": "虎尾",
+        "category": [
+            "飲料"
+        ],
+        "types": [
+            "日常吃飯"
+        ],
+        "tier": "LINE社群 金賞名單",
+        "ig_url": "https://www.instagram.com/oing_tea/",
+        "reels_url": "",
+        "map_url": "https://www.google.com.tw/maps/place/Oing+Tea+%E9%AB%98%E5%B1%B1%E7%83%8F%E9%BE%8D%E8%8C%B6%E8%A3%BD%E6%89%80/@23.7078186,120.4143394,3500m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346eb1036ff9e34d:0xaf99c6b79615d8db!8m2!3d23.7078!4d120.4327719!16s%2Fg%2F11md88pd2q?entry=ttu&g_ep=EgoyMDI2MTEwOS4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.7078,
+        "lon": 120.4327719
+    },
+    {
+        "name": "川玥 虎尾店",
+        "subtitle": "虎尾獨具氣氛的火鍋店",
+        "description": "黑色系的大氣裝潢，肉品與鍋底選擇相當多元\n自助吧也相當豐富 超過25種以上的菜品可以自由夾取\n是周末家庭聚餐的熱店之一",
+        "price_range": "350-600",
+        "district": "虎尾",
+        "category": [
+            "正餐"
+        ],
+        "types": [
+            "聚餐",
+            "慶生",
+            "約會",
+            "日常吃飯"
+        ],
+        "tier": "WEN日常美食推薦",
+        "ig_url": "https://www.instagram.com/chuan.yue5333877/",
+        "reels_url": "",
+        "map_url": "https://www.google.com.tw/maps/place/%E5%B7%9D%E7%8E%A5+%E7%A7%98%E5%A2%83%E9%8D%8B%E7%89%A9+%E8%99%8E%E5%B0%BE%E5%BA%97/@23.6996086,120.4224278,875m/data=!3m2!1e3!4b1!4m6!3m5!1s0x346ebb007c55ccb5:0x4e7522c5fd873756!8m2!3d23.6996037!4d120.4250081!16s%2Fg%2F11xcgdtsz6?entry=ttu&g_ep=EgoyMDI2MTEwOS4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.6996037,
+        "lon": 120.4250081
+    },
+    {
+        "name": "藝壽司",
+        "subtitle": "用料相當大方的生魚片丼專賣店",
+        "description": "每日只販售中午兩個半小時\n生魚片的用量非常大氣 是當地非常高CP值的低調店家\n是虎尾非常推薦的店家之一",
+        "price_range": "250-400",
+        "district": "虎尾",
+        "category": [
+            "正餐",
+            "東方料理(中 日 韓  東南亞 中東)"
+        ],
+        "types": [
+            "獨處"
+        ],
+        "tier": "LINE社群 金賞名單",
+        "ig_url": "",
+        "reels_url": "",
+        "map_url": "https://www.google.com.tw/maps/place/%E8%97%9D%E5%A3%BD%E5%8F%B8/@23.6974297,120.4211924,875m/data=!3m1!1e3!4m14!1m7!3m6!1s0x346ebb007c55ccb5:0x4e7522c5fd873756!2z5bed546lIOenmOWig-mNi-eJqSDomY7lsL7lupc!8m2!3d23.6996037!4d120.4250081!16s%2Fg%2F11xcgdtsz6!3m5!1s0x346eb0a90d122d2b:0x521f7752d7a3e062!8m2!3d23.69621!4d120.422722!16s%2Fg%2F11dzw788wn?entry=ttu&g_ep=EgoyMDI2MTEwOS4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.6996037,
+        "lon": 120.4250081
+    },
+    {
+        "name": "黑先生飯館",
+        "subtitle": "味道甚好的台式家常菜簡餐",
+        "description": "這裡販售著台式家常菜佳餚，味道十足，料理用心!\n環境明亮乾淨且舒適，菜品非常開胃下飯\n想在日常生活中吃得美味一些，黑先生飯館非常適合!",
+        "price_range": "200-300",
+        "district": "斗六",
+        "category": [
+            "正餐",
+            "東方料理(中 日 韓  東南亞 中東)"
+        ],
+        "types": [
+            "日常吃飯",
+            "約會",
+            "聚餐",
+            "質感空間"
+        ],
+        "tier": "LINE社群 金賞名單",
+        "ig_url": "https://www.instagram.com/mrblackdiner/",
+        "reels_url": "",
+        "map_url": "https://www.google.com.tw/maps/place/%E9%BB%91%E5%85%88%E7%94%9F%E9%A3%AF%E9%A4%A8/@23.6880596,120.535835,875m/data=!3m1!1e3!4m8!3m7!1s0x346ec9cf63137df5:0x6596d8951ea6126e!8m2!3d23.6880547!4d120.5384153!9m1!1b1!16s%2Fg%2F11qs86v71k?entry=ttu&g_ep=EgoyMDI2MTEwOS4wIKXMDSoASAFQAw%3D%3D",
+        "lat": 23.6880547,
+        "lon": 120.5384153
     }
 ]
